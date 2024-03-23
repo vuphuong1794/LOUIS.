@@ -43,34 +43,38 @@ export const sliderItems = [
   export const popularProducts = [
     {
       id:1,
-      img:"https://d3o2e4jr3mxnm3.cloudfront.net/Mens-Jake-Guitar-Vintage-Crusher-Tee_68382_1_lg.png",
+      img:"https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/459713/item/goods_09_459713.jpg?width=750",
     },
     {
       id:2,
-      img:"https://cdn.shopify.com/s/files/1/0101/4832/products/Angela_Natural_Tee.png?v=1606780388",
+      img:"https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/472516/item/goods_10_472516.jpg?width=750",
     },
     {
       id:3,
-      img:"https://www.prada.com/content/dam/pradanux_products/U/UCS/UCS319/1YOTF010O/UCS319_1YOT_F010O_S_182_SLF.png",
+      img:"https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/472517/item/goods_00_472517.jpg?width=750",
     },
     {
       id:4,
-      img:"https://www.burdastyle.com/pub/media/catalog/product/cache/7bd3727382ce0a860b68816435d76e26/107/BUS-PAT-BURTE-1320516/1170x1470_BS_2016_05_132_front.png",
+      img:"https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/450189/item/goods_05_450189.jpg?width=750",
     },
     {
       id:5,
-      img:"https://images.ctfassets.net/5gvckmvm9289/3BlDoZxSSjqAvv1jBJP7TH/65f9a95484117730ace42abf64e89572/Noissue-x-Creatsy-Tote-Bag-Mockup-Bundle-_4_-2.png",
+      img:"https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/454780/item/goods_31_454780.jpg?width=750",
     },
     {
       id:6,
-      img:"https://d3o2e4jr3mxnm3.cloudfront.net/Rocket-Vintage-Chill-Cap_66374_1_lg.png",
+      img:"https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/454780/sub/goods_454780_sub14.jpg?width=750",
     },
     {
       id:7,
-      img:"https://www.vintageindustries.nl/download_front/qympzk1762/2217_Arrow_Jacket_Forest.png",
+      img:"https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/461701/item/goods_68_461701.jpg?width=750",
     },
     {
       id:8,
-      img:"https://www.pngarts.com/files/3/Women-Jacket-PNG-High-Quality-Image.png",
+      img:"https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/466246/item/goods_09_466246.jpg?width=750",
     },
+    {
+      id:9,
+      img: "https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/462249/item/goods_69_462249.jpg?width=320"
+    }
   ]
