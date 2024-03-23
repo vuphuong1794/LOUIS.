@@ -1,21 +1,21 @@
 export const sliderItems = [
     {
       id: 1,
-      img: "https://images.pexels.com/photos/8386669/pexels-photo-8386669.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      img: "https://media.gucci.com/content/DiaryArticleSingle_Standard_1536x2150/1709551816/DiaryArticleSingle_Gucci-Horsebit-Loafer-Feb24-SHOT-06-HS-231219-GUCCI-LOAFERS-0028_001_Default.jpg",
       title: "SUMMER SALE",
       desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
       bg: "f5fafd",
     },
     {
       id: 2,
-      img: "https://i.ibb.co/DG69bQ4/2.png",
+      img: "https://media.gucci.com/dynamic/b3c8/ueXjUcwoRHobgEuPMdIKnrvlUHs89lE2ENMvoZ6dPM+yPMW_SPd3St1wS7Z6S4kOIwjQwTby6J6IecYDKblqRtlHB6oAAKhp_268UAisA5bH8PsuRZv0g+aRlSlbfp+YYOG21lbo+g68hfpWS+8gWy+zmsv6NBTYicTSMamjG+vuIxEYHJFLY_LmMzD2NJsqYT20TZpPwOdbD5w3sCrqGig5o1I81uvuHRLTKy8224xbrX7A9DOdLSPljCBYuOpE/SS24_FSWLook001_GLOBAL_001_Light.png",
       title: "AUTUMN COLLECTION",
       desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
       bg: "fcf1ed",
     },
     {
       id: 3,
-      img: "https://i.ibb.co/cXFnLLV/3.png",
+      img: "https://media.gucci.com/dynamic/b3c8/sJtuu3nuzau4H10gXDARJO54vHP1gdUaxikw9RaQfMEy+Q8lexnhfGdAh3nnK8bcfXxNrVxAxkd_wyHv26vz0yyb9iyGc9leS0nc1jgfxoAX7L0vRU86tt5ijCu5Vqd48wyQz_IKnlvjaVERxol5_2P3jVgKSMndUKLkRXivC7LiYElKRiMWbSDe6LEXW5UzKWNmYqUQ+QVHAMi3YWsG6cMArJCalnVcJO9_VyoJR4r1SxLUqVue0K0JVcWWt91+j70ALjbK9Xw4eeJ+0o0uJQ==/SS24_FSW_625839KAAAM9742_GLOBAL_001_Light.png",
       title: "LOUNGEWEAR LOVE",
       desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
       bg: "fbf0f4",
@@ -25,7 +25,7 @@ export const sliderItems = [
   export const categories = [
     {
       id: 1,
-      img: "https://images.pexels.com/photos/8306371/pexels-photo-8306371.jpeg",
+      img: "https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       title: "SHIRT STYLE!",
     },
     {

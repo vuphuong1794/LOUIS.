@@ -10,7 +10,7 @@ const Navbar = () => {
             <div className="left">
                 <span className="language">EN</span>
                 <div className="search-container">
-                    <input placeholder='search ...'/>
+                    <input placeholder='search ...' className='input'/>
                     <SearchIcon style={{color: "gray", fontSize: "16px"}}/>
                 </div>
             </div>

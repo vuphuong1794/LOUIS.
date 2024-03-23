@@ -52,3 +52,7 @@
     cursor: pointer;
     margin-left: 25px;
 }
+
+.search-container input{
+    border: none;
+}
