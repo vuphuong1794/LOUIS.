@@ -1,0 +1,24 @@
+.newLetter-container{
+    display: flex;
+    flex-direction: column;
+    height: 60vh;
+    background-color:#fcf5f5;
+    justify-content: center;
+    align-items: center;
+}
+
+.Input{
+    width: 50%;
+    height: 40px;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid lightgray;
+    align-items: center;
+}
+
+.Input input{
+    border: none;
+    flex: 8;
+    padding-left: 20px;
+}
