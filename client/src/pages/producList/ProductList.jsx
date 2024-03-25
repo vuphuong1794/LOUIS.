@@ -1,15 +1,19 @@
-import React from 'react'
-import Navbar from '../../components/Navbar/Navbar'
-import Announcement from '../../components/Announcement/Announcement'
+import React from "react";
+import Navbar from "../../components/Navbar/Navbar";
+import Announcement from "../../components/Announcement/Announcement";
+import "./productList.css";
+import Products from "../../components/products/Products";
+import NewLetters from "../../components/newLetter/NewLetters";
+import Footer from "../../components/Footer/Footer";
 
 const ProductList = () => {
   return (
     <div className="List-container">
-      <Navbar/>
-      <Announcement/>
-      <h1> Dresses</h1>
+      <Navbar />
+      <Announcement />
+      <h1 style={{margin: "20px"}}> Dresses</h1>
       <div className="filter-container">
-      <div className="Filter">
+        <div className="Filter">
           <div className="FilterText">Filter Products:</div>
           <select className="Select">
             <option disabled selected>
@@ -36,15 +40,17 @@ const ProductList = () => {
         <div className="Filter">
           <div className="FilterText">Sort Products:</div>
           <select className="Select">
-            <option  selected>Newest</option>
+            <option selected>Newest</option>
             <option>Price (asc)</option>
             <option>Price (desc)</option>
           </select>
         </div>
       </div>
+      <Products />
+      <NewLetters />
+      <Footer />
     </div>
+  );
+};
 
-  )
-}
-
-export default ProductList
+export default ProductList;
