@@ -16,7 +16,7 @@ const Navbar = () => {
             </div>
             <div className="center">
                 <h1 className="logo">
-                    LOBOO.
+                    LOUIS.
                 </h1>
             </div>
             <div className="right">
