@@ -73,8 +73,5 @@ export const sliderItems = [
       id:8,
       img:"https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/466246/item/goods_09_466246.jpg?width=750",
     },
-    {
-      id:9,
-      img: "https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/462249/item/goods_69_462249.jpg?width=320"
-    }
+    
   ]

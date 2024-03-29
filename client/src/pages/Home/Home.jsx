@@ -17,7 +17,6 @@ const Home = () => {
         <Products/>
         <NewLetters/>
         <Footer/>
-
     </div>
   )
 }

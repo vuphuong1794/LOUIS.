@@ -9,6 +9,7 @@ const Container = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
 `;
+
 const Products = () => {
   return (
     <>

@@ -1,55 +1,89 @@
 import React from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import Announcement from "../../components/Announcement/Announcement";
-import "./productList.css";
 import Products from "../../components/products/Products";
 import NewLetters from "../../components/newLetter/NewLetters";
 import Footer from "../../components/Footer/Footer";
+import styled from "styled-components"
+import { mobile } from "../../responsive";
+
+const Container = styled.div``;
+
+const Title = styled.h1`
+  margin: 20px;
+`;
+
+const FilterContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Filter = styled.div`
+  margin: 20px;
+  ${mobile({ width: "0px 20px", display: "flex", flexDirection: "column" })}
+`;
+
+const FilterText = styled.span`
+  font-size: 20px;
+  font-weight: 600;
+  margin-right: 20px;
+  ${mobile({ marginRight: "0px" })}
+`;
+
+const Select = styled.select`
+  padding: 10px;
+  margin-right: 20px;
+  border:1px solid gray;
+  ${mobile({ margin: "10px 0px" })}
+`;
+const Option = styled.option`
+  border: none;
+`;
 
 const ProductList = () => {
   return (
-    <div className="List-container">
+    <Container>
       <Navbar />
       <Announcement />
-      <h1 style={{margin: "20px"}}> Dresses</h1>
-      <div className="filter-container">
-        <div className="Filter">
-          <div className="FilterText">Filter Products:</div>
-          <select className="Select">
-            <option disabled selected>
+      <Title> Dresses</Title>
+      <FilterContainer>
+        <Filter>
+          <FilterText>Filter Products:</FilterText>
+          <Select>
+            <Option disabled selected>
               Color
-            </option>
-            <option>White</option>
-            <option>Black</option>
-            <option>Red</option>
-            <option>Blue</option>
-            <option>Yellow</option>
-            <option>Green</option>
-          </select>
-          <select className="Select">
-            <option disabled selected>
+            </Option>
+            <Option>White</Option>
+            <Option>Black</Option>
+            <Option>Red</Option>
+            <Option>Blue</Option>
+            <Option>Yellow</Option>
+            <Option>Green</Option>
+          </Select>
+          <Select>
+            <Option disabled selected>
               Size
-            </option>
-            <option>XS</option>
-            <option>S</option>
-            <option>M</option>
-            <option>L</option>
-            <option>XL</option>
-          </select>
-        </div>
-        <div className="Filter">
+            </Option>
+            <Option>XS</Option>
+            <Option>S</Option>
+            <Option>M</Option>
+            <Option>L</Option>
+            <Option>XL</Option>
+          </Select>
+        </Filter>
+        <Filter>
           <div className="FilterText">Sort Products:</div>
-          <select className="Select">
-            <option selected>Newest</option>
-            <option>Price (asc)</option>
-            <option>Price (desc)</option>
-          </select>
-        </div>
-      </div>
+          <Select>
+            <Option selected>Newest</Option>
+            <Option>Price (asc)</Option>
+            <Option>Price (desc)</Option>
+          </Select>
+        </Filter>
+      </FilterContainer>
       <Products />
       <NewLetters />
       <Footer />
-    </div>
+    </Container>
   );
 };
 

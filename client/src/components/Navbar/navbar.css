@@ -1,11 +1,10 @@
-.nav-container{
-    height: 60px;
-}
+
 
 .wrapper{
     padding: 10px 20px;
     display: flex;
-    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .left{

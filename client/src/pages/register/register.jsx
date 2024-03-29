@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { mobile } from "../../responsive";
 
 const Container = styled.div`
   width: 100vw;
@@ -14,12 +15,13 @@ const Wrapper = styled.div`
   width: 40%;
   padding: 20px;
   background-color: white;
+  ${mobile({width: "65%"})}
 
 `;
 
 const Title = styled.h1`
   font-size: 24px;
-  font-weight: 300;
+  font-weight: 500;
 `;
 
 const Form = styled.form`
@@ -32,6 +34,7 @@ const Input = styled.input`
   min-width: 40%;
   margin: 20px 10px 0px 0px;
   padding: 10px;
+  border: 1px solid gray;
 `;
 
 const Agreement = styled.span`
@@ -46,6 +49,7 @@ const Button = styled.button`
   background-color: teal;
   color: white;
   cursor: pointer;
+  ${mobile({width: "100%"})}
 `;
 
 const Register = () => {

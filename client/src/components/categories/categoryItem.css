@@ -1,6 +1,6 @@
 .cateItem-container{
-    display: flex;
-    padding: 20px;
+    flex: 1;
+    height: 70vh;
     justify-content: space-between;
     position: relative;
 }
