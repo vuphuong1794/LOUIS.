@@ -2,9 +2,10 @@ const router = require("express").Router();
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const createdError = require("../utils/error")
 
 //register
-router.post("/register", async (req, res) => {
+router.post("/register", async (req, res, next) => {
   try {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
@@ -14,26 +15,31 @@ router.post("/register", async (req, res) => {
       email: req.body.email,
       password: hash,
     });
+
     await newUser.save();
-    res.status(201).json("User has been created!");
+    res.status(200).json("User has been created!");
   } catch (err) {
-    res.status(500).json(err);
+      next(err);
   }
 });
 
 //login
-router.post("/login", async (req, res) => {
+router.post("/login", async (req, res, next) => {
   try {
     const user = await User.findOne({
       username: req.body.username,
     });
 
+    if(!user) 
+      return next(createdError(404, "User not found!"));
+    
     const isPasswordCorrect = await bcrypt.compare(
       req.body.password,
       user.password
     );
 
-    if (!isPasswordCorrect) res.status(400).json( "Wrong password!");
+    if (!isPasswordCorrect) 
+      return next(createdError(400, "Wrong password or username!"));
 
     const token = jwt.sign(
       {
@@ -54,7 +60,7 @@ router.post("/login", async (req, res) => {
       .status(200)
       .json({...others , isAdmin});
   } catch (err) {
-    res.status(500).json(err);
+      next(err);
   }
 });
 
