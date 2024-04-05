@@ -28,16 +28,14 @@ router.post("/login", async (req, res) => {
       username: req.body.username,
     });
 
-    !user && res.status(401).json("Wrong username!");
-
     const isPasswordCorrect = await bcrypt.compare(
       req.body.password,
       user.password
     );
 
-    if (!isPasswordCorrect) return next(createdError(400, "Wrong password!"));
+    if (!isPasswordCorrect) res.status(400).json( "Wrong password!");
 
-    const accessToken = jwt.sign(
+    const token = jwt.sign(
       {
         id: user._id,
         isAdmin: user.isAdmin,
@@ -46,8 +44,15 @@ router.post("/login", async (req, res) => {
       { expiresIn: "3d" }
     );
 
-    const { password, ...others } = user._doc;
-    res.status(200).json({ ...others, accessToken });
+    const { password, isAdmin,...others } = user._doc;
+    res
+      .cookie("access_token", token, {
+        httpOnly: true,
+        sameSite: 'none',
+        secure: true
+      })
+      .status(200)
+      .json({...others , isAdmin});
   } catch (err) {
     res.status(500).json(err);
   }
