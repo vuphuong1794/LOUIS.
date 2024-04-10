@@ -6,6 +6,7 @@ const authRoute = require("./routes/auth")
 const userRoute = require("./routes/user")
 const productRoute = require("./routes/product")
 const cartRoute = require("./routes/cart")
+const orderRoute = require("./routes/order")
 const cors = require("cors")
 const cookieParser = require("cookie-parser")
 
@@ -29,6 +30,7 @@ app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute)
 app.use("/api/products", productRoute)
 app.use("/api/carts", cartRoute)
+app.use("/api/orders", orderRoute)
 
 //xu ly neu co loi xay ra
 app.use((err, req, res, next) => {
