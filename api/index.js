@@ -4,6 +4,7 @@ const mongoose = require("mongoose")
 const dotenv = require("dotenv")
 const authRoute = require("./routes/auth")
 const userRoute = require("./routes/user")
+const productRoute = require("./routes/product")
 const cors = require("cors")
 const cookieParser = require("cookie-parser")
 
@@ -22,6 +23,7 @@ app.use(cors({
 app.use(express.json())
 app.use("/api/auth", authRoute);
 app.use("/api/user", userRoute)
+app.use("/api/products", productRoute)
 
 //xu ly neu co loi xay ra
 app.use((err, req, res, next) => {
