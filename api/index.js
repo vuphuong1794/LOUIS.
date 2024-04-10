@@ -5,6 +5,7 @@ const dotenv = require("dotenv")
 const authRoute = require("./routes/auth")
 const userRoute = require("./routes/user")
 const productRoute = require("./routes/product")
+const cartRoute = require("./routes/cart")
 const cors = require("cors")
 const cookieParser = require("cookie-parser")
 
@@ -15,15 +16,19 @@ mongoose
     .then(()=>{console.log("connected to DB")})
     .catch((err)=>{console.log(err)})
 
+// MIDDLEWARES
 app.use(cookieParser());
 app.use(cors({
     origin: "http://localhost:8000",
     credentials: true,
 }));
 app.use(express.json())
+
+//ROUTES
 app.use("/api/auth", authRoute);
-app.use("/api/user", userRoute)
+app.use("/api/users", userRoute)
 app.use("/api/products", productRoute)
+app.use("/api/carts", cartRoute)
 
 //xu ly neu co loi xay ra
 app.use((err, req, res, next) => {

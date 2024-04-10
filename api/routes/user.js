@@ -37,7 +37,7 @@ router.get("/find/:id", verifyAdmin, async (req, res, next)=>{
 })
 
 //get all user 
-router.get("/users", verifyAdmin, async (req, res, next)=>{
+router.get("/", verifyAdmin, async (req, res, next)=>{
     try{
         const users = await User.find();
         res.status(200).json(users);
