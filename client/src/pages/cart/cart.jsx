@@ -5,6 +5,7 @@ import Announcement from "../../components/Announcement/Announcement";
 import Footer from "../../components/Footer/Footer";
 import Navbar from "../../components/Navbar/Navbar"
 import { mobile } from '../../responsive';
+import StripeCheckout from 'react-stripe-checkout';
 
 const Container = styled.div``;
 
@@ -155,6 +156,11 @@ const Button = styled.button`
   font-weight: 600;
 `;
 
+const KEY = "pk_test_51P414nRv7rbjgIfEcr3bsEFOPqy18yMaSO25VtSFYfrTCySImPeIicGpxoKFdNVi5OnZCfsWwmtFAlQWttNLybTl00vnMsE8R3"
+
+const onToken = (token)=>{
+console.log(token)
+}
 const Cart = () => {
   return (
     <Container>
@@ -168,7 +174,17 @@ const Cart = () => {
             <TopText>Shopping Bag(2)</TopText>
             <TopText>Your Wishlist (0)</TopText>
           </TopTexts>
+          <StripeCheckout
+              name="Payment Information"
+              billingAddress
+              shippingAddress
+              description="Your total is $20"
+              amount={2000}
+              token={onToken}
+              stripeKey={KEY}
+            >
           <TopButton type="filled">CHECKOUT NOW</TopButton>
+          </StripeCheckout>
         </Top>
         <Bottom>
           <Info>
@@ -242,7 +258,17 @@ const Cart = () => {
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice>$ 80</SummaryItemPrice>
             </SummaryItem>
-            <Button>CHECKOUT NOW</Button>
+            <StripeCheckout
+              name="Payment Information"
+              billingAddress
+              shippingAddress
+              description="Your total is $20"
+              amount={2000}
+              token={onToken}
+              stripeKey={KEY}
+            >
+              <Button>CHECKOUT NOW</Button>
+            </StripeCheckout>
           </Summary>
         </Bottom>
       </Wrapper>
