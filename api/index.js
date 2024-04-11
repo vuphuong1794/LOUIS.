@@ -20,7 +20,7 @@ mongoose
 // MIDDLEWARES
 app.use(cookieParser());
 app.use(cors({
-    origin: "http://localhost:8000",
+    origin: "*",
     credentials: true,
 }));
 app.use(express.json())
