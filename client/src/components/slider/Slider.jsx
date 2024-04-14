@@ -80,6 +80,8 @@ const Button = styled.button`
   background-color: transparent;
   cursor: pointer;
   border-radius: 5px;
+  font-weight: 700;
+  border: 3px solid;
 `;
 
 const Slider = () => {

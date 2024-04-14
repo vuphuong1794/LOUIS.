@@ -25,21 +25,21 @@ export const sliderItems = [
   export const categories = [
     {
       id: 1,
-      img: "https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      img: "https://eteft.com/cdn/shop/products/16221674_31277672_1000.webp?v=1672227045&width=1445",
       title: "SHIRT STYLE!",
       cat: "tshirt"
     },
     {
       id: 2,
-      img: "https://images.pexels.com/photos/2983464/pexels-photo-2983464.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      title: "LOUNGEWEAR LOVE",
-      cat: "coat"
+      img: "https://images.asos-media.com/products/love-moschino-twist-handle-structured-shoulder-bag-in-red/204781505-1-red?$n_750w$&wid=750&hei=750&fit=crop",
+      title: "BAG LOVE",
+      cat: "bag"
     },
     {
       id: 3,
-      img: "https://images.pexels.com/photos/5480696/pexels-photo-5480696.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-      title: "LIGHT JACKETS",
-      cat: "jean"
+      img: "https://media.maxfashion.com/i/max/C23MCSFSMLWFB100GREENLIGHT-C23MCSFSMLWFB100-MXWN23070723_01-2100.jpg?$prodimg-d-prt-pdp-2x$&$quality-retina$&fmt=auto&sm=c",
+      title: "SHORTS, PANTS",
+      cat: "short"
     },
   ];
 

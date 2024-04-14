@@ -31,16 +31,20 @@ const Info = styled.div`
 
 const Title = styled.h1`
     color:white;
+    font-size: 40px;
+    font-weight: bold;
+    color: whitesmoke;
     margin-bottom: 20px;
 `;
 
 const Button = styled.button`
-    border:none;
-    padding: 10px;
+    border:2px solid ;
+    border-radius: 10px;
+    padding: 15px;
     background-color: white;
-    color:gray;
+    color:black;
     cursor: pointer;
-    font-weight: 600;
+    font-weight: 800;
 `;
 
 const CategoryItem = ({ item }) => {
