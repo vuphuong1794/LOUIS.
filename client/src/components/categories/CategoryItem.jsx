@@ -38,11 +38,11 @@ const Title = styled.h1`
 `;
 
 const Button = styled.button`
-    border:2px solid ;
-    border-radius: 10px;
+  border: none;
+    border-bottom:2px solid ;
     padding: 15px;
-    background-color: white;
-    color:black;
+    background-color: transparent;
+    color:white;
     cursor: pointer;
     font-weight: 800;
 `;

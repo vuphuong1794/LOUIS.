@@ -75,13 +75,13 @@ const Desc = styled.p`
 `;
 
 const Button = styled.button`
-  padding: 10px;
+  padding: 5px;
   font-size: 20px;
   background-color: transparent;
   cursor: pointer;
-  border-radius: 5px;
-  font-weight: 700;
-  border: 3px solid;
+  font-weight: 600;
+  border: none;
+  border-bottom: 2px solid;
 `;
 
 const Slider = () => {

@@ -9,6 +9,8 @@ import Newsletter from "../../components/newLetter/NewLetters";
 import Footer from "../../components/Footer/Footer";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import { addProduct } from "../../components/redux/cartRedux";
+import { useDispatch } from "react-redux";
 
 const Container = styled.div``;
 
@@ -128,6 +130,8 @@ const SingleProduct = () => {
   const [size, setSize] = useState("")
   const [quantity, setQuantity] = useState(1)
 
+const dispatch = useDispatch();
+
   useEffect(() => {
     const getProduct = async () => {
       try {
@@ -147,6 +151,10 @@ const SingleProduct = () => {
       setQuantity(quantity + 1);
     }
   };
+
+  const handleClick=()=>{
+    dispatch(addProduct({...product, quantity, color, size}))
+  }
 
   return (
     <Container>
@@ -186,7 +194,7 @@ const SingleProduct = () => {
               <Amount>{quantity}</Amount>
               <AddIcon onClick={()=>handleQuantity("inc")}/>
             </AmountContainer>
-            <Button className="add-btn" >ADD TO CART</Button>
+            <Button onClick={handleClick} className="add-btn" >ADD TO CART</Button>
           </AddContainer>
         </InfoContainer>
       </Wrapper>
