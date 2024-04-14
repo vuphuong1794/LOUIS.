@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import Announcement from "../../components/Announcement/Announcement";
 import styled from "styled-components";
@@ -7,13 +7,15 @@ import AddIcon from "@mui/icons-material/Add";
 import { mobile } from "../../responsive";
 import Newsletter from "../../components/newLetter/NewLetters";
 import Footer from "../../components/Footer/Footer";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
 
 const Container = styled.div``;
 
 const Wrapper = styled.div`
   padding: 50px;
   display: flex;
-  ${mobile({ padding: "10px", flexDirection:"column" })}
+  ${mobile({ padding: "10px", flexDirection: "column" })}
 `;
 
 const ImgContainer = styled.div`
@@ -68,6 +70,7 @@ const FilterColor = styled.div`
   width: 20px;
   height: 20px;
   border-radius: 50%;
+  border: 1px solid;
   background-color: ${(props) => props.color};
   margin: 0px 5px;
   cursor: pointer;
@@ -112,55 +115,78 @@ const Button = styled.button`
   cursor: pointer;
   font-weight: 500;
 
-  &:hover{
-      background-color: #f8f4f4;
+  &:hover {
+    background-color: #f8f4f4;
   }
 `;
 
 const SingleProduct = () => {
+  const location = useLocation();
+  const id = location.pathname.split("/")[2];
+  const [product, setProduct] = useState({});
+  const [color, setColor] = useState({})
+  const [size, setSize] = useState("")
+  const [quantity, setQuantity] = useState(1)
+
+  useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:8000/api/products/find/${id}`
+        );
+        setProduct(res.data);
+      } catch (err) {}
+    };
+    getProduct();
+  }, [id]);
+
+  const handleQuantity = (type) => {
+    if (type === "dec") {
+      quantity > 1 && setQuantity(quantity - 1);
+    } else {
+      setQuantity(quantity + 1);
+    }
+  };
+
   return (
     <Container>
       <Navbar />
       <Announcement />
       <Wrapper>
         <ImgContainer>
-          <Image src="https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/472517/item/goods_00_472517.jpg?width=750" />
+          <Image src={product.img} />
         </ImgContainer>
         <InfoContainer>
-          <Title>lv Tshirt</Title>
+          <Title>{product.title}</Title>
           <Desc>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-            venenatis, dolor in finibus malesuada, lectus ipsum porta nunc, at
-            iaculis arcu nisi sed mauris. Nulla fermentum vestibulum ex, eget
-            tristique tortor pretium ut. Curabitur elit justo, consequat id
-            condimentum ac, volutpat ornare.
+            {product.desc}
           </Desc>
-          <Price>$ 20</Price>
+          <Price>$ {product.price}</Price>
           <FilterContainer>
             <Filter>
               <FilterTitle>Color</FilterTitle>
-              <FilterColor color="black" />
-              <FilterColor color="darkblue" />
-              <FilterColor color="gray" />
+              {product.color?.map((i)=>(
+                <FilterColor color={i} key={i} onClick={()=>setColor(i)} />
+              ))}
+              
             </Filter>
             <Filter>
               <FilterTitle>Size</FilterTitle>
-              <FilterSize>
-                <FilterSizeOption>XS</FilterSizeOption>
-                <FilterSizeOption>S</FilterSizeOption>
-                <FilterSizeOption>M</FilterSizeOption>
-                <FilterSizeOption>L</FilterSizeOption>
-                <FilterSizeOption>XL</FilterSizeOption>
+              <FilterSize onChange={(e) => setSize(e.target.value)}>
+                {product.size?.map((s)=>(
+                  <FilterSizeOption key={s}>{s}</FilterSizeOption>
+                ))}
+                
               </FilterSize>
             </Filter>
           </FilterContainer>
           <AddContainer>
             <AmountContainer>
-              <RemoveIcon />
-              <Amount>1</Amount>
-              <AddIcon />
+              <RemoveIcon onClick={()=>handleQuantity("desc")}/>
+              <Amount>{quantity}</Amount>
+              <AddIcon onClick={()=>handleQuantity("inc")}/>
             </AmountContainer>
-            <Button className="add-btn">ADD TO CART</Button>
+            <Button className="add-btn" >ADD TO CART</Button>
           </AddContainer>
         </InfoContainer>
       </Wrapper>
