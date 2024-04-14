@@ -126,7 +126,7 @@ const SingleProduct = () => {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
   const [product, setProduct] = useState({});
-  const [color, setColor] = useState({})
+  const [color, setColor] = useState("")
   const [size, setSize] = useState("")
   const [quantity, setQuantity] = useState(1)
 

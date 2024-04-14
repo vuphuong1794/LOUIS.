@@ -59,7 +59,8 @@ const MenuItem = styled.div`
 `;
 
 const Navbar = () => {
-  const quantity = useSelector(state=>state.cart.quantity)
+  const quantity = useSelector((state) => state.cart.quantity);
+  const { currentUser } = useSelector((state) => state.user);
 
   return (
     <Container>
@@ -71,19 +72,27 @@ const Navbar = () => {
             <SearchIcon style={{ color: "gray", fontSize: 16 }} />
           </div>
         </Left>
-        <Link to="/" style={{textDecoration: "none", color: "black"}}>
+        <Link to="/" style={{ textDecoration: "none", color: "black" }}>
           <div className="center">
             <Logo>LOUIS.</Logo>
           </div>
         </Link>
         <Right>
-          <MenuItem>Register</MenuItem>
-          <div className="menuItem">Sign in</div>
-          <div className="menuItem">
-            <Badge badgeContent={quantity} color="primary">
-              <ShoppingCartOutlined />
-            </Badge>
-          </div>
+          {currentUser == null ? (
+            <>
+              <MenuItem>Register</MenuItem>
+              <div className="menuItem">Sign in</div>
+            </>
+          ) : (
+            <span>{currentUser.username}</span>
+          )}
+          <Link to="/cart">
+            <div className="menuItem">
+              <Badge badgeContent={quantity} color="primary">
+                <ShoppingCartOutlined />
+              </Badge>
+            </div>
+          </Link>
         </Right>
       </Wrapper>
     </Container>

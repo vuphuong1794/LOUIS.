@@ -1,5 +1,9 @@
 import styled from "styled-components";
 import {mobile} from "../../responsive";
+import { useState } from "react";
+import {useDispatch, useSelector} from "react-redux"
+import { login } from "../../components/redux/apiCall";
+import {Navigate} from "react-router-dom"
 
 const Container = styled.div`
   width: 100vw;
@@ -54,6 +58,10 @@ const Button = styled.button`
   color: white;
   cursor: pointer;
   margin-bottom: 10px;
+  &:disabled {
+    color: green;
+    cursor: not-allowed;
+  }
 `;
 
 const Link = styled.a`
@@ -63,17 +71,35 @@ const Link = styled.a`
   cursor: pointer;
 `;
 
+const Error = styled.span`
+  color: red;
+`;
+
 const Login = () => {
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
+  const { isFetching, error, currentUser} = useSelector((state) => state.user);
+
+  const dispatch = useDispatch();
+
+  const handleLogin = (e)=>{
+    e.preventDefault();
+    login(dispatch, {username, password})
+  }
+
   return (
     <Container>
       <Wrapper>
         <Title>Sign In</Title>
         <Form>
-          <Input placeholder="username" />
-          <Input placeholder="password" />
-          <Button>Login</Button>
+          <Input placeholder="username" onChange={(e)=>setUsername(e.target.value)}/>
+          <Input placeholder="password" onChange={(e)=>setPassword(e.target.value)}/>
+          <Button onClick={handleLogin} disabled={isFetching}>Login</Button>
+          {error && <Error>Something went wrong...</Error>}
           <Link>Forget pasword?</Link>
           <Link>Sign Up</Link>
+
+          {currentUser!=null && <Navigate to="/"/>}
         </Form>
       </Wrapper>
     </Container>
