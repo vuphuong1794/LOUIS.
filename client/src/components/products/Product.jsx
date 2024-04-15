@@ -4,6 +4,8 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import { Link } from "react-router-dom";
+import { addProduct } from "../redux/cartRedux";
+import { useDispatch } from "react-redux";
 
 const Info = styled.div`
   opacity: 0;
@@ -67,13 +69,18 @@ const Icon = styled.div`
 `;
 
 const Product = ({ item }) => {
+  const dispatch = useDispatch();
+  const handleClick=()=>{
+    dispatch(addProduct({...item, quantity: 1, size: item.size[0]}))
+  }
+  
   return (
     <Container>
       <Circle />
       <Image src={item.img} />
       <Info>
         <Icon>
-          <ShoppingCartOutlinedIcon />
+          <ShoppingCartOutlinedIcon onClick={handleClick}/>
         </Icon>
 
         <Icon>

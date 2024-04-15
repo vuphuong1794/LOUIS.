@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { loginFailure, loginStart, loginSuccess } from "./userRedux";
 import axios from "axios"
 
@@ -12,3 +11,7 @@ export const login = async (dispatch, user) => {
     dispatch(loginFailure());
   }
 };
+
+export const logOut = (dispatch)=>{
+  dispatch(loginFailure())
+}

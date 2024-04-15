@@ -1,5 +1,10 @@
 import styled from "styled-components";
 import { mobile } from "../../responsive";
+import { useState } from "react";
+import axios from "axios";
+import { login } from "../../components/redux/apiCall";
+import { useDispatch } from "react-redux";
+import { Navigate } from "react-router-dom";
 
 const Container = styled.div`
   width: 100vw;
@@ -53,22 +58,45 @@ const Button = styled.button`
 `;
 
 const Register = () => {
+  const [info, setInfo] = useState({})
+  const [success, setSuccess] = useState(false);
+  const dispatch=useDispatch();
+
+  const handleChange = (e)=>{
+    setInfo((prev)=>({...prev, [e.target.id]: e.target.value}))
+  }
+
+  const handleClick = async (e)=>{
+    e.preventDefault();
+    try{
+      const newUser ={ ...info}
+      await axios.post("http://localhost:8000/api/auth/register", newUser);
+
+      login(dispatch, {username: newUser.username, password: newUser.password})
+      setSuccess(true);
+    } catch(err){
+      console.log(err)
+    }
+
+  }
+
   return (
     <Container>
       <Wrapper>
         <Title>CREATE AN ACCOUNT</Title>
         <Form>
-          <Input placeholder="name" />
-          <Input placeholder="last name" />
-          <Input placeholder="username" />
-          <Input placeholder="email" />
-          <Input placeholder="password" />
-          <Input placeholder="confirm password" />
+          <Input placeholder="name" type="text" id="name" onChange={handleChange}/>
+          <Input placeholder="last name" type="text" id="last name" onChange={handleChange}/>
+          <Input placeholder="username" type="text" id="username" onChange={handleChange}/>
+          <Input placeholder="email" type="text" id="email" onChange={handleChange}/>
+          <Input placeholder="password" type="password" id="password" onChange={handleChange}/>
+          <Input placeholder="confirm password" type="password" id="confirm password" onChange={handleChange}/>
           <Agreement>
             By creating an account, I consent to the processing of my personal
             data in accordance with the <b>PRIVACY POLICY</b>
           </Agreement>
-          <Button>CREATE</Button>
+          <Button onClick={handleClick}>CREATE</Button>
+          {success && <Navigate to="/"/>}
         </Form>
       </Wrapper>
     </Container>

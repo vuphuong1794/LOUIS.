@@ -6,7 +6,9 @@ import ShoppingCartOutlined from "@mui/icons-material/ShoppingCartOutlined";
 import styled from "styled-components";
 import { mobile } from "../../responsive";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logOut } from "../redux/apiCall";
+import { useState } from "react";
 
 const Container = styled.div`
   height: 60px;
@@ -59,8 +61,13 @@ const MenuItem = styled.div`
 `;
 
 const Navbar = () => {
+  const dispatch = useDispatch();
   const quantity = useSelector((state) => state.cart.quantity);
   const { currentUser } = useSelector((state) => state.user);
+  const [logout, setLogout] = useState(false);
+  const handleClick = () => {
+    logOut(dispatch);
+  };
 
   return (
     <Container>
@@ -80,13 +87,26 @@ const Navbar = () => {
         <Right>
           {currentUser == null ? (
             <>
-              <MenuItem>Register</MenuItem>
-              <div className="menuItem">Sign in</div>
+              <Link
+                to="/register"
+                style={{ textDecoration: "none", color: "black" }}
+              >
+                <MenuItem>Register</MenuItem>
+              </Link>
+              <Link
+                to="/login"
+                style={{ textDecoration: "none", color: "black" }}
+              >
+                <div className="menuItem">Sign in</div>
+              </Link>
             </>
           ) : (
-            <span>{currentUser.username}</span>
+            <>
+              <span onClick={()=>setLogout(true)}>{currentUser.username}</span>
+              {logout && <span style={{padding: "5px"}}onClick={handleClick}>Log Out</span>}
+            </>
           )}
-          <Link to="/cart">
+          <Link to="/cart" style={{ textDecoration: "none", color: "black" }}>
             <div className="menuItem">
               <Badge badgeContent={quantity} color="primary">
                 <ShoppingCartOutlined />
