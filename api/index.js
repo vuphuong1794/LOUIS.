@@ -18,11 +18,12 @@ mongoose
     .catch((err)=>{console.log(err)})
 
 // MIDDLEWARES
-app.use(cookieParser());
+
 app.use(cors({
-    origin: "*",
+    origin: ["http://localhost:3000", "http://localhost:8000"],
     credentials: true,
 }));
+app.use(cookieParser());
 app.use(express.json())
 
 //ROUTES
