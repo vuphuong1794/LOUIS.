@@ -15,11 +15,9 @@
     align-items: center;
     justify-content: center;
     top: 20px;
-    font-size: 25px;
+    font-size: 30px;
     font-weight: 600;
 }
-
-
 
 .send {
     width: 200px;
@@ -34,10 +32,6 @@
 
 .send:hover{
     background-color: #343232;
-}
-.group {
-    position: relative;
-    margin-bottom: 35px;
 }
 
 input:focus {

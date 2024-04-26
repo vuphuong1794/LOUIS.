@@ -7,6 +7,7 @@ const userRoute = require("./routes/user")
 const productRoute = require("./routes/product")
 const cartRoute = require("./routes/cart")
 const orderRoute = require("./routes/order")
+const mailRoute = require("./routes/mailer")
 const cors = require("cors")
 const cookieParser = require("cookie-parser")
 
@@ -32,6 +33,7 @@ app.use("/api/users", userRoute)
 app.use("/api/products", productRoute)
 app.use("/api/carts", cartRoute)
 app.use("/api/orders", orderRoute)
+app.use("/api/mail", mailRoute)
 
 //xu ly neu co loi xay ra
 app.use((err, req, res, next) => {
