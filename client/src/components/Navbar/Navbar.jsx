@@ -145,7 +145,7 @@ const Navbar = () => {
             </div>
           </Link>
           <Link to="/contact" style={{textDecoration: "none", color: "black"}}>
-          <Contact>Contact Us</Contact>
+          <Contact style={{padding: "5px"}}>Contact Us</Contact>
           </Link>
         </Right>
       </Wrapper>
