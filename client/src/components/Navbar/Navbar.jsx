@@ -5,7 +5,7 @@ import Badge from "@mui/material/Badge";
 import ShoppingCartOutlined from "@mui/icons-material/ShoppingCartOutlined";
 import styled from "styled-components";
 import { mobile } from "../../responsive";
-import { Link } from "react-router-dom";
+import {Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../redux/apiCall";
 import { useState } from "react";
@@ -37,6 +37,7 @@ const Language = styled.span`
 
 const Input = styled.input`
   border: none;
+  text-decoration: none;
   ${mobile({ width: "50px" })}
 `;
 
@@ -68,9 +69,13 @@ const PopUp = styled.div`
     padding: 5px;
     flex-direction: column;
     z-index: 1;
-    background: wheat;
+    background: whitesmoke;
     cursor: pointer;
     border: 1px solid;
+`
+
+const Contact = styled.span`
+
 `
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -78,19 +83,32 @@ const Navbar = () => {
   const actualQuantity = quantity < 0 ? 0 : quantity;
   const { currentUser } = useSelector((state) => state.user);
   const [logout, setLogout] = useState(false);
+  const [input, setInput] = useState("");
+  const navigate = useNavigate()
   const handleClick = () => {
     logOut(dispatch);
   };
+
+  const handleSearch=(e)=>{
+    e.preventDefault();
+    //console.log(input);
+    navigate(`/products/${input}`)
+  }
 
   return (
     <Container>
       <Wrapper>
         <Left>
           <Language>EN</Language>
-          <div className="search-container">
-            <Input placeholder="search ..." className="input" />
+          <form className="search-container" onSubmit={handleSearch}>
+            <Input placeholder="search ..." onChange={(e)=>setInput(e.target.value)} list="items" />
             <SearchIcon style={{ color: "gray", fontSize: 16 }} />
-          </div>
+            <datalist id="items" className="datalist">
+                    <option value="bag">bag</option>
+                    <option value="tshirt">tshirt</option>
+                    <option value="short">short</option>
+                  </datalist>
+          </form>
         </Left>
         <Link to="/" style={{ textDecoration: "none", color: "black" }}>
           <div className="center">
@@ -116,7 +134,7 @@ const Navbar = () => {
           ) : (
             <>
               <span onClick={()=>setLogout(!logout)} style={{cursor: "pointer"}}>{currentUser.username}</span>
-              {logout && (<PopUp><Link to="/order"><span>View order</span></Link><span style={{padding: "5px"}} onClick={handleClick}>Log out</span></PopUp>)}
+              {logout && (<PopUp><Link to="/order" style={{textDecoration: "none", color: "black"}}><span>View order</span></Link><span style={{padding: "5px"}} onClick={handleClick}>Log out</span></PopUp>)}
             </>
           )}
           <Link to="/cart" style={{ textDecoration: "none", color: "black" }}>
@@ -125,6 +143,9 @@ const Navbar = () => {
                 <ShoppingCartOutlined />
               </Badge>
             </div>
+          </Link>
+          <Link to="/contact" style={{textDecoration: "none", color: "black"}}>
+          <Contact>Contact Us</Contact>
           </Link>
         </Right>
       </Wrapper>

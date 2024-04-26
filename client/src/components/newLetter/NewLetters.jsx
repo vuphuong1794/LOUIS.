@@ -8,18 +8,20 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
+  flex-direction: column;  
+  ${mobile({ height: "30vh" })}
 `;
 const Title = styled.h1`
   font-size: 70px;
   margin-bottom: 20px;
+  ${mobile({ fontSize: "50px"})}
 `;
 
 const Desc = styled.div`
   font-size: 24px;
   font-weight: 300;
   margin-bottom: 20px;
-  ${mobile({ textAlign: "center" })}
+  ${mobile({ textAlign: "center", fontSize: "20px" })}
 
 `;
 
@@ -30,7 +32,7 @@ const InputContainer = styled.div`
   display: flex;
   justify-content: space-between;
   border: 1px solid lightgray;
-  ${mobile({ width: "80%" })}
+  ${mobile({ width: "75%" })}
 `;
 
 const Input = styled.input`

@@ -7,6 +7,7 @@ import Register from "./pages/register/register";
 import Login from "./pages/Login/login";
 import Cart from "./pages/cart/cart"
 import Order from "./pages/order/order";
+import Contact from "./components/contact/contact";
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
         <Route path="/login" element={<Login/>}/>
         <Route path="/cart" element={<Cart/>}/>
         <Route path="/order" element={<Order/>}/>
+        <Route path="/contact" element={<Contact/>}/>
       </Routes>
     </BrowserRouter>
   );

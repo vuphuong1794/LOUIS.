@@ -56,8 +56,8 @@ const ProductList = () => {
     });
   };
 
-  console.log(filters)
-  console.log(sort)
+  //console.log(filters)
+  //console.log(sort)
   return (
     <Container>
       <Navbar />

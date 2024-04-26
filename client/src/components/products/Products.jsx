@@ -24,7 +24,7 @@ const Products = ({cat, filters, sort}) => {
             ? `http://localhost:8000/api/products?category=${cat}`
             : "http://localhost:8000/api/products"
           ,{withCredentials:true});
-          console.log(res.data);
+          //console.log(res.data);
         setProducts(res.data);
       } catch (err) {}
     }

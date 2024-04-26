@@ -30,19 +30,6 @@
     cursor: pointer;
 }
 
-.search-container{
-    border: 1px solid lightgray;
-    display: flex;
-    align-items: center;
-    margin-left: 25px;
-    padding: 5px;
-    border-radius: 8px ;
-}
-
-.search-container input{
-    border: none;
-}
-
 .logo{
     font-weight: bold;
 }
@@ -53,6 +40,16 @@
     margin-left: 25px;
 }
 
+.search-container {
+  border: 1px solid lightgray;
+  display: flex;
+  align-items: center;
+  margin-left: 25px;
+  padding: 5px;
+  border-radius: 8px ;
+}
+
 .search-container input{
     border: none;
+    outline: none;
 }
