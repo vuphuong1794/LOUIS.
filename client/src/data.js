@@ -31,7 +31,7 @@ export const sliderItems = [
     },
     {
       id: 2,
-      img: "https://images.asos-media.com/products/love-moschino-twist-handle-structured-shoulder-bag-in-red/204781505-1-red?$n_750w$&wid=750&hei=750&fit=crop",
+      img: "https://www.purseblog.com/images/2023/11/Distressed-Bag-Love-It-or-Leave-It.jpg",
       title: "BAG LOVE",
       cat: "bag"
     },

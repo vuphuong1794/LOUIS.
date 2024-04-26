@@ -60,9 +60,22 @@ const MenuItem = styled.div`
   ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `;
 
+const PopUp = styled.div`
+    display: flex;
+    top: 80px;
+    right: 45px;
+    position: absolute;
+    padding: 5px;
+    flex-direction: column;
+    z-index: 1;
+    background: wheat;
+    cursor: pointer;
+    border: 1px solid;
+`
 const Navbar = () => {
   const dispatch = useDispatch();
   const quantity = useSelector((state) => state.cart.quantity);
+  const actualQuantity = quantity < 0 ? 0 : quantity;
   const { currentUser } = useSelector((state) => state.user);
   const [logout, setLogout] = useState(false);
   const handleClick = () => {
@@ -102,13 +115,13 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <span onClick={()=>setLogout(true)}>{currentUser.username}</span>
-              {logout && <span style={{padding: "5px"}}onClick={handleClick}>Log Out</span>}
+              <span onClick={()=>setLogout(!logout)} style={{cursor: "pointer"}}>{currentUser.username}</span>
+              {logout && (<PopUp><Link to="/order"><span>View order</span></Link><span style={{padding: "5px"}} onClick={handleClick}>Log out</span></PopUp>)}
             </>
           )}
           <Link to="/cart" style={{ textDecoration: "none", color: "black" }}>
             <div className="menuItem">
-              <Badge badgeContent={quantity} color="primary">
+              <Badge badgeContent={actualQuantity} color="primary">
                 <ShoppingCartOutlined />
               </Badge>
             </div>

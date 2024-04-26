@@ -6,19 +6,9 @@ import SingleProduct from "./pages/SingleProduct/SingleProduct";
 import Register from "./pages/register/register";
 import Login from "./pages/Login/login";
 import Cart from "./pages/cart/cart"
-import { useSelector } from "react-redux";
+import Order from "./pages/order/order";
 
 function App() {
-  
-  const ProtectedRoute = ({ children }) => {
-    const { currentUser } = useSelector((state) => state.user);
-
-    if (!currentUser) {
-      return <Navigate to="/login" />;
-    }
-
-    return children;
-  };
 
   return (
     <BrowserRouter>
@@ -28,7 +18,8 @@ function App() {
         <Route path="/product/:id" element={<SingleProduct/>}/>
         <Route path="/register" element={<Register/>}/>
         <Route path="/login" element={<Login/>}/>
-        <Route path="/cart" element={<ProtectedRoute><Cart/></ProtectedRoute>}/>
+        <Route path="/cart" element={<Cart/>}/>
+        <Route path="/order" element={<Order/>}/>
       </Routes>
     </BrowserRouter>
   );

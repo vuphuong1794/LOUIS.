@@ -1,5 +1,5 @@
 const Product = require("../models/Product");
-const { verifyUser, verifyAdmin } = require("../utils/verify");
+const { verifyUser, verifyAdmin, verifyToken } = require("../utils/verify");
 
 const router = require("express").Router();
 
@@ -48,7 +48,7 @@ router.get("/find/:id", async (req, res, next)=>{
 })
 
 //get all product 
-router.get("/", async (req, res, next)=>{
+router.get("/",async (req, res, next)=>{
     const qNew = req.query.new;
     const qCategory= req.query.category;
     try{
