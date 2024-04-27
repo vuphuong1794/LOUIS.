@@ -64,7 +64,7 @@ const MenuItem = styled.div`
 const PopUp = styled.div`
     display: flex;
     top: 80px;
-    right: 45px;
+    right: 140px;
     position: absolute;
     padding: 5px;
     flex-direction: column;
@@ -72,6 +72,7 @@ const PopUp = styled.div`
     background: whitesmoke;
     cursor: pointer;
     border: 1px solid;
+    ${mobile({ right: "70px" })}
 `
 
 const Contact = styled.span`

@@ -7,13 +7,17 @@ import Navbar from "../../components/Navbar/Navbar";
 import { mobile } from "../../responsive";
 import StripeCheckout from "react-stripe-checkout";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   decreaseQuantity,
   increaseQuantity,
   removeAllProducts,
 } from "../../components/redux/cartRedux";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import PayButton from "../../components/PayButton";
 
 const Container = styled.div``;
 
@@ -183,12 +187,28 @@ const KEY =
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const currentUser = useSelector((state) => state.user);
+  const currentUser = useSelector((state) => state.user.currentUser);
   const cart = useSelector((state) => state.cart);
+  const [onCheckOut, setOnCheckOut] = useState(false);
+  const [shippingAddress, setShippingAddress] = useState("");
+  /*
   const [stripeToken, setStripeToken] = useState(null);
-  const onToken = (token) => {
+  const onToken = (token, addresses) => {
     setStripeToken(token);
-  };
+    setShippingAddress(addresses?.shipping);
+  };*/
+
+  const notify = () =>
+    toast.success("🦄 Payment success!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
   /*
   useEffect(() => {
     const makeRequest = async () => {
@@ -208,7 +228,7 @@ const Cart = () => {
   const handleDecrease = (productId) => {
     dispatch(decreaseQuantity(productId));
   };
-/*
+  /*
   const handleIncrease = (productId) => {
     dispatch(increaseQuantity(productId));
   };*/
@@ -216,6 +236,61 @@ const Cart = () => {
   const handleRemoveAll = (product) => {
     dispatch(removeAllProducts(product));
   };
+
+  const handleCheckout = async (e) => {
+    e.preventDefault();
+    try {
+      const orderData = {
+        userId: currentUser?._id,
+        products: cart.products.map((product) => ({
+          productId: product._id,
+          quantity: product.quantity,
+        })),
+        amount: cart.total,
+        address: shippingAddress,
+      };
+      const res = await axios.post(
+        `http://localhost:8000/api/orders`,
+        orderData,
+        { withCredentials: true }
+      );
+
+      notify();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  /*
+  useEffect(() => {
+    const makeRequest = async () => {
+      try {
+        const orderData = {
+          userId: currentUser?._id,
+          products: cart.products.map((product) => ({
+            productId: product._id,
+            quantity: product.quantity,
+          })),
+          amount: cart.total,
+          address: shippingAddress
+        };
+  
+        const res = await axios.post(
+          `http://localhost:8000/api/orders`,
+          orderData,
+          { withCredentials: true }
+        );
+  
+        console.log(res);
+        notify();
+      } catch (err) {
+        console.log(err);
+      }
+    };
+  
+    stripeToken && makeRequest();
+  }, [stripeToken, cart, currentUser, shippingAddress]);
+console.log(shippingAddress)
+*/
 
   return (
     <Container>
@@ -289,7 +364,17 @@ const Cart = () => {
                     </ProductDetail>
                     <PriceDetail>
                       <ProductAmountContainer>
-                        <AddIcon onClick={() => dispatch(increaseQuantity(product._id, product.quantity, product.price))} />
+                        <AddIcon
+                          onClick={() =>
+                            dispatch(
+                              increaseQuantity(
+                                product._id,
+                                product.quantity,
+                                product.price
+                              )
+                            )
+                          }
+                        />
                         <ProductAmount>{product.quantity}</ProductAmount>
                         <RemoveIcon
                           onClick={() => handleDecrease(product._id)}
@@ -321,17 +406,22 @@ const Cart = () => {
                   <SummaryItemText>Total</SummaryItemText>
                   <SummaryItemPrice>${cart.total}</SummaryItemPrice>
                 </SummaryItem>
-                <StripeCheckout
-                  name="Payment Information"
-                  billingAddress
-                  shippingAddress
-                  description={`Your total is $${cart.total}`}
-                  amount={cart.total * 100}
-                  token={onToken}
-                  stripeKey={KEY}
-                >
-                  <Button>CHECKOUT NOW</Button>
-                </StripeCheckout>
+                {onCheckOut ? (
+                  <div onClick={handleCheckout}>
+                    <PayButton cartItems={cart.products} />
+                  </div>
+                ) : (
+                  <>
+                    <h2>Shipping address</h2>
+                    <input
+                      type="text"
+                      placeholder="Enter your address"
+                      onChange={(e) => setShippingAddress(e.target.value)}
+                      required
+                    />
+                    <button onClick={()=>setOnCheckOut(true)}>Ok</button>
+                  </>
+                )}
               </Summary>
             </>
           )}

@@ -10,6 +10,7 @@ const orderRoute = require("./routes/order")
 const mailRoute = require("./routes/mailer")
 const cors = require("cors")
 const cookieParser = require("cookie-parser")
+const stripe = require("./routes/stripe")
 
 dotenv.config()
 
@@ -34,6 +35,7 @@ app.use("/api/products", productRoute)
 app.use("/api/carts", cartRoute)
 app.use("/api/orders", orderRoute)
 app.use("/api/mail", mailRoute)
+app.use("/api/stripe", stripe)
 
 //xu ly neu co loi xay ra
 app.use((err, req, res, next) => {
