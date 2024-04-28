@@ -41,7 +41,7 @@
 }
 
 .search-container {
-  border: 1px solid lightgray;
+  border: 1px solid #706f6f;
   display: flex;
   align-items: center;
   margin-left: 25px;

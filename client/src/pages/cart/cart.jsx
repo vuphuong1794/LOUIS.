@@ -208,23 +208,7 @@ const Cart = () => {
       draggable: true,
       progress: undefined,
     });
-
-  /*
-  useEffect(() => {
-    const makeRequest = async () => {
-      try {
-        const res = await axios.post("http://localhost:8000/api/checkout/payment", {
-          tokenId: stripeToken.id,
-          amount: 500,
-        });
-        history.push("/success", {
-          stripeData: res.data,
-          products: cart, });
-      } catch {}
-    };
-    stripeToken && makeRequest();
-  }, [stripeToken, cart.total, history]);
-*/
+ 
   const handleDecrease = (productId) => {
     dispatch(decreaseQuantity(productId));
   };
@@ -260,37 +244,6 @@ const Cart = () => {
       console.log(err);
     }
   };
-  /*
-  useEffect(() => {
-    const makeRequest = async () => {
-      try {
-        const orderData = {
-          userId: currentUser?._id,
-          products: cart.products.map((product) => ({
-            productId: product._id,
-            quantity: product.quantity,
-          })),
-          amount: cart.total,
-          address: shippingAddress
-        };
-  
-        const res = await axios.post(
-          `http://localhost:8000/api/orders`,
-          orderData,
-          { withCredentials: true }
-        );
-  
-        console.log(res);
-        notify();
-      } catch (err) {
-        console.log(err);
-      }
-    };
-  
-    stripeToken && makeRequest();
-  }, [stripeToken, cart, currentUser, shippingAddress]);
-console.log(shippingAddress)
-*/
 
   return (
     <Container>
@@ -310,7 +263,15 @@ console.log(shippingAddress)
         </Top>
         <Bottom>
           {currentUser == null || cart.products.length === 0 ? (
-            <div>
+            <div onClick={()=> toast.error("Please login again!", {
+              position: "top-right",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            })}>
               <img
                 src={
                   "https://blogzine.webestica.com/assets/images/icon/empty-cart.svg"
@@ -338,6 +299,7 @@ console.log(shippingAddress)
               >
                 Your Cart Is Empty
               </h3>
+              <ToastContainer/>
             </div>
           ) : (
             <>

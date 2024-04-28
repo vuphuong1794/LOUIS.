@@ -7,6 +7,7 @@ import styled from "styled-components";
 import { mobile } from "../../responsive";
 import {Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import { logOut } from "../redux/apiCall";
 import { useState } from "react";
 
@@ -134,6 +135,7 @@ const Navbar = () => {
             </>
           ) : (
             <>
+              <PersonOutlineIcon/>
               <span onClick={()=>setLogout(!logout)} style={{cursor: "pointer"}}>{currentUser.username}</span>
               {logout && (<PopUp><Link to="/order" style={{textDecoration: "none", color: "black"}}><span>View order</span></Link><span style={{padding: "5px"}} onClick={handleClick}>Log out</span></PopUp>)}
             </>

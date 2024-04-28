@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { popularProducts } from "../../data";
 import Product from "./Product";
 import axios from "axios";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Container = styled.div`
   padding: 20px;
@@ -26,7 +27,17 @@ const Products = ({cat, filters, sort}) => {
           ,{withCredentials:true});
           //console.log(res.data);
         setProducts(res.data);
-      } catch (err) {}
+      } catch (err) {
+        toast.error("Please login again!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        })
+      }
     }
     getProduct();
   },[cat])
@@ -66,6 +77,7 @@ const Products = ({cat, filters, sort}) => {
         : products
             .slice(0, 8)
             .map((item) => <Product item={item} key={item.id} />)}
+            <ToastContainer/>
       </Container>
     </>
   );
