@@ -77,7 +77,7 @@ const PopUp = styled.div`
 `
 
 const Contact = styled.span`
-
+${mobile({ fontSize: "14px" })}
 `
 const Navbar = () => {
   const dispatch = useDispatch();

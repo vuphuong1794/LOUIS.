@@ -1,4 +1,54 @@
-.Title{
+/* order.css */
+
+.Title {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 20px;
     display: flex;
-    justify-content: center;
-}
+    justify-content: flex-start;
+
+  }
+  
+  .form-wrapper {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .ma {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .ngaydat,
+  .tongtien,
+  .diachi,
+  .trangthai {
+    margin-bottom: 5px;
+  }
+  
+  .trangthai {
+    font-weight: bold;
+  }
+  
+  .product {
+    margin-top: 10px;
+    margin-bottom: 5px;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    margin-bottom: 5px;
+  }

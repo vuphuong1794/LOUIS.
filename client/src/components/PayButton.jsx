@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useSelector } from "react-redux";
-
+import "./payButton.css"
 const PayButton = ({cartItems})=>{
 
     const currentUser = useSelector((state) => state.user.currentUser);
@@ -13,7 +13,7 @@ const PayButton = ({cartItems})=>{
     }
     return (
         <>
-        <button onClick={()=>handleCheckOut()}>Check Out</button>
+        <button className="btn" onClick={()=>handleCheckOut()}>Check Out</button>
         </>
     )
 }

@@ -81,6 +81,7 @@ const ProductDetail = styled.div`
 
 const Image = styled.img`
   width: 200px;
+  ${mobile({ width: "180px" })}
 `;
 
 const Details = styled.div`
@@ -88,11 +89,14 @@ const Details = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  ${mobile({ padding: "20px" })}
 `;
 
 const ProductName = styled.span``;
 
-const ProductId = styled.span``;
+const ProductId = styled.span`
+  ${mobile({ fontSize: "14px" })}
+`;
 
 const ProductColor = styled.div`
   width: 20px;
@@ -108,12 +112,10 @@ const PriceDetail = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
   ${mobile({
     flexDirection: "row",
-    justifyContent: "space-between",
-    padding: "10px",
+    justifyContent: "space-around",
   })}
 `;
 
@@ -166,8 +168,7 @@ const SummaryItemText = styled.span``;
 const SummaryItemPrice = styled.span``;
 
 const Button = styled.button`
-  width: 100%;
-  padding: 10px;
+  padding: 12px;
   background-color: black;
   color: white;
   font-weight: 600;
@@ -182,6 +183,30 @@ const RemoveAll = styled.div`
   color: white;
 `;
 
+const ShippingTitle = styled.h2`
+  display: flex;
+  font-size: large;
+  margin-top: -10px;
+  padding-top: 10px;
+  border-top: 1px solid;
+`;
+
+const Input = styled.input`
+  outline: none;
+  border: none;
+  border: 1px solid;
+  height: 30px;
+  font-weight: 600;
+  padding: 5px;
+  width: 100%;
+`;
+
+const InputWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+`;
 const KEY =
   "pk_test_51P414nRv7rbjgIfEcr3bsEFOPqy18yMaSO25VtSFYfrTCySImPeIicGpxoKFdNVi5OnZCfsWwmtFAlQWttNLybTl00vnMsE8R3";
 
@@ -208,7 +233,7 @@ const Cart = () => {
       draggable: true,
       progress: undefined,
     });
- 
+
   const handleDecrease = (productId) => {
     dispatch(decreaseQuantity(productId));
   };
@@ -263,15 +288,19 @@ const Cart = () => {
         </Top>
         <Bottom>
           {currentUser == null || cart.products.length === 0 ? (
-            <div onClick={()=> toast.error("Please login again!", {
-              position: "top-right",
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            })}>
+            <div
+              onClick={() =>
+                toast.error("Please login again!", {
+                  position: "top-right",
+                  autoClose: 2000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                })
+              }
+            >
               <img
                 src={
                   "https://blogzine.webestica.com/assets/images/icon/empty-cart.svg"
@@ -299,7 +328,7 @@ const Cart = () => {
               >
                 Your Cart Is Empty
               </h3>
-              <ToastContainer/>
+              <ToastContainer />
             </div>
           ) : (
             <>
@@ -374,14 +403,16 @@ const Cart = () => {
                   </div>
                 ) : (
                   <>
-                    <h2>Shipping address</h2>
-                    <input
-                      type="text"
-                      placeholder="Enter your address"
-                      onChange={(e) => setShippingAddress(e.target.value)}
-                      required
-                    />
-                    <button onClick={()=>setOnCheckOut(true)}>Ok</button>
+                    <ShippingTitle>Shipping address</ShippingTitle>
+                    <InputWrapper>
+                      <Input
+                        type="text"
+                        placeholder="Enter your address"
+                        onChange={(e) => setShippingAddress(e.target.value)}
+                        required
+                      />
+                      <Button onClick={() => setOnCheckOut(true)}>Ok</Button>
+                    </InputWrapper>
                   </>
                 )}
               </Summary>

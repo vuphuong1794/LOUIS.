@@ -1,0 +1,27 @@
+.wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.btn{
+    padding: 15px 50px 15px 50px;
+    background-color: #2fb02f;
+    border-radius: 10px;
+    color: white;
+    border: none;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.detail{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.detail .desc{
+    padding: 10px;
+}
