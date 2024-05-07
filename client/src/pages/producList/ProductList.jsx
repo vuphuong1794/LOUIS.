@@ -7,12 +7,21 @@ import Footer from "../../components/Footer/Footer";
 import styled from "styled-components";
 import { mobile } from "../../responsive";
 import { useLocation } from "react-router-dom";
+import { categories } from "../../data";
 
 //STYLE
 const Container = styled.div``;
 
 const Title = styled.h1`
-  margin: 20px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: whitesmoke;
+  font-size: 60px;
+  ${mobile({fontSize: "40px"})}
 `;
 
 const FilterContainer = styled.div`
@@ -38,16 +47,45 @@ const Select = styled.select`
   border: 1px solid gray;
   ${mobile({ margin: "10px 0px" })}
 `;
+
 const Option = styled.option`
   border: none;
 `;
 
+const Top = styled.div`
+position: relative;
+`
+
+const Image = styled.img`
+  width: 100vw;
+  height: 60vh;
+  object-fit: cover;
+  ${mobile({height: "25vh"})}
+`
+
+const Desc = styled.span`
+ position: absolute;
+ bottom: 100px;
+ font-size: 30px;
+ color: white;
+ margin: 0 40px;
+ ${mobile({bottom: "30px", margin: "0 20px", fontSize: "13px"})}
+`
+
+const Sex = styled.div`
+display: flex;
+align-items: center;
+margin: 10px;
+justify-content: center;
+`
 const ProductList = () => {
   const location = useLocation();
   const cat = location.pathname.split("/")[2];
   const [filters, setFilters] = useState({});
   const [sort, setSort] = useState("newest")
 
+  const categoryImage = categories.find(item => item.cat === cat)?.img;  
+  const categoryDesc = categories.find(item => item.cat === cat)?.desc;
   const handleFilter = (e) => {
     const value = e.target.value;
     setFilters({
@@ -56,13 +94,19 @@ const ProductList = () => {
     });
   };
 
-  //console.log(filters)
-  //console.log(sort)
   return (
     <Container>
       <Navbar />
       <Announcement />
-      <Title> Dresses</Title>
+      <Top>
+      <Title> {cat}</Title>
+      <Desc>{categoryDesc}</Desc>
+      <Image src={categoryImage}/>
+      </Top>
+      <Sex>
+        <h3 style={{marginRight: "10px", width: "80px", display: "flex", justifyContent: "center",  padding: "10px", borderRadius: "50px", backgroundColor: "black", color: "white"}}>Men</h3>
+        <h3 style={{marginLeft: "10px", display: "flex", justifyContent: "center",width: "80px", padding: "10px", borderRadius: "50px", backgroundColor: "black", color: "white"}}>Women</h3>
+      </Sex>
       <FilterContainer>
         <Filter>
           <FilterText>Filter Products:</FilterText>

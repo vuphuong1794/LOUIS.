@@ -13,7 +13,6 @@ import { useState } from "react";
 
 const Container = styled.div`
   height: 60px;
-  ${mobile({ height: "50px" })}
 `;
 
 const Wrapper = styled.div`
@@ -28,6 +27,7 @@ const Left = styled.div`
   flex: 1;
   display: flex;
   align-items: center;
+  ${mobile({ flex: "0" })}
 `;
 
 const Language = styled.span`
@@ -39,7 +39,7 @@ const Language = styled.span`
 const Input = styled.input`
   border: none;
   text-decoration: none;
-  ${mobile({ width: "50px" })}
+  ${mobile({ display: "none" })}
 `;
 
 const Logo = styled.h1`
@@ -77,8 +77,20 @@ const PopUp = styled.div`
 `
 
 const Contact = styled.span`
-${mobile({ fontSize: "14px" })}
+${mobile({ fontSize: "14px", marginLeft: "5px" })}
 `
+
+const SearchContainer = styled.form` 
+  border: 1px solid #706f6f;
+  display: flex;
+  align-items: center;
+  margin-left: 25px;
+  padding: 5px;
+  border-radius: 8px ;
+  cursor: pointer;
+  ${mobile({ border:"none", marginLeft: "0px", fontSize: "30px" })}
+`
+
 const Navbar = () => {
   const dispatch = useDispatch();
   const quantity = useSelector((state) => state.cart.quantity);
@@ -102,15 +114,15 @@ const Navbar = () => {
       <Wrapper>
         <Left>
           <Language>EN</Language>
-          <form className="search-container" onSubmit={handleSearch}>
+          <SearchContainer onSubmit={handleSearch}>
             <Input placeholder="search ..." onChange={(e)=>setInput(e.target.value)} list="items" />
-            <SearchIcon style={{ color: "gray", fontSize: 16 }} />
+            <SearchIcon style={{ color: "gray", fontSize: 18 }} />
             <datalist id="items" className="datalist">
                     <option value="bag">bag</option>
                     <option value="tshirt">tshirt</option>
                     <option value="short">short</option>
                   </datalist>
-          </form>
+          </SearchContainer>
         </Left>
         <Link to="/" style={{ textDecoration: "none", color: "black" }}>
           <div className="center">

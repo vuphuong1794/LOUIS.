@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { mobile } from "../../responsive";
 import { Link } from "react-router-dom";
 
-
 const Container = styled.div`
   flex: 1;
   margin: 3px;
@@ -26,25 +25,27 @@ const Info = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
 `;
 
 const Title = styled.h1`
-    color:white;
+    color: white;
     font-size: 40px;
     font-weight: bold;
     color: whitesmoke;
     margin-bottom: 20px;
+    ${mobile({fontSize: "30px"})}
 `;
 
 const Button = styled.button`
   border: none;
-    border-bottom:2px solid ;
+    border-radius: 2px;
     padding: 15px;
-    background-color: transparent;
-    color:white;
+    background-color: whitesmoke;
+    color:#000;
     cursor: pointer;
-    font-weight: 800;
+    font-weight: 700;
+    ${mobile({fontSize: "13px"})}
 `;
 
 const CategoryItem = ({ item }) => {
@@ -54,7 +55,7 @@ const CategoryItem = ({ item }) => {
       <Image src={item.img} />
       <Info>
         <Title>{item.title}</Title>
-        <Button>SHOP NOW</Button>
+        <Button>EXPLORE THE SELECTION </Button>
       </Info>
       </Link>
     </Container>

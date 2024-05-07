@@ -3,15 +3,13 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import "./order.css";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
-
 
 const Order = () => {
   const [orders, setOrders] = useState(null);
   const { currentUser } = useSelector((state) => state.user);
-
   const notify = () =>
     toast.error("Please login again!", {
       position: "top-right",
@@ -32,18 +30,15 @@ const Order = () => {
           { withCredentials: true }
         );
         setOrders(response.data);
-
-        if(response.status !=200){
-            notify()
+        if (response.status !== 200) {
+          notify();
         }
-      } catch (err) {}
+      } catch (err) {
+        notify();
+      }
     };
     fetchOrders();
   }, []);
-
-  if (!orders) {
-    return <div className="">Đang tải...</div>;
-  }
 
   return (
     <div>
@@ -68,7 +63,7 @@ const Order = () => {
               <ul>
                 {order.products.map((product) => (
                   <li key={product._id}>
-                    Mã sản phẩm: {product.productId} - Số lượng:{" "}
+                    Mã SP: {product.productId} - SL:{" "}
                     {product.quantity}
                   </li>
                 ))}

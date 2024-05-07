@@ -3,7 +3,7 @@ const app = express();
 const axios = require("axios").default;
 const CryptoJS = require("crypto-js");
 const moment = require("moment");
-const qs = require("qs")
+const qs = require("qs");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -62,7 +62,6 @@ app.post("/payment", async (req, res) => {
 
 app.post("/callback", (req, res) => {
   let result = {};
-
   try {
     let dataStr = req.body.data;
     let reqMac = req.body.mac;

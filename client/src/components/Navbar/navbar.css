@@ -40,16 +40,6 @@
     margin-left: 25px;
 }
 
-.search-container {
-  border: 1px solid #706f6f;
-  display: flex;
-  align-items: center;
-  margin-left: 25px;
-  padding: 5px;
-  border-radius: 8px ;
-  cursor: pointer;
-}
-
 .search-container input{
     border: none;
     outline: none;

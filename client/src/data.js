@@ -27,19 +27,27 @@ export const sliderItems = [
       id: 1,
       img: "https://eteft.com/cdn/shop/products/16221674_31277672_1000.webp?v=1672227045&width=1445",
       title: "SHIRT STYLE!",
-      cat: "tshirt"
+      cat: "tshirt",
     },
     {
       id: 2,
       img: "https://www.purseblog.com/images/2023/11/Distressed-Bag-Love-It-or-Leave-It.jpg",
       title: "BAG LOVE",
-      cat: "bag"
+      cat: "bag",
+      desc: "The latest selection of summer handbags for women presents mini bags, tote bags, top handle and shoulder bags in fresh colors and materials.",
     },
     {
       id: 3,
       img: "https://media.maxfashion.com/i/max/C23MCSFSMLWFB100GREENLIGHT-C23MCSFSMLWFB100-MXWN23070723_01-2100.jpg?$prodimg-d-prt-pdp-2x$&$quality-retina$&fmt=auto&sm=c",
       title: "SHORTS, PANTS",
-      cat: "short"
+      cat: "short",
+      desc: "Discover our newest trouser collection this year"
+    },
+    {
+      id: 4,
+      img: "https://vegnews.com/media/W1siZiIsIjIyOTg3L1ZlZ05ld3MuR3VjY2kyLmpwZyJdLFsicCIsImNyb3BfcmVzaXplZCIsIjEyNjB4NzQ0KzArNDciLCIxNjAweDk0Nl4iLHsiZm9ybWF0IjoianBnIn1dLFsicCIsIm9wdGltaXplIl1d/VegNews.Gucci2.jpg?sha=33760dafb8f43256",
+      title: "SHOES",
+      cat: "shoes, slipper"
     },
   ];
 
