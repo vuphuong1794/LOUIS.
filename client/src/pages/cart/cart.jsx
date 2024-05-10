@@ -156,7 +156,7 @@ const SummaryTitle = styled.h1`
 `;
 
 const SummaryItem = styled.div`
-  margin: 30px 0px;
+  margin: 20px 0px;
   display: flex;
   justify-content: space-between;
   font-weight: ${(props) => props.type === "total" && "500"};
@@ -207,6 +207,29 @@ const InputWrapper = styled.div`
   align-items: center;
   margin-top: 10px;
 `;
+
+const ZaloPay=styled.div`
+    background-color: #118ACB;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    width: 250px;
+    margin: 5px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    cursor: pointer;
+`
+
+const CheckOutWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`
+
 const KEY =
   "pk_test_51P414nRv7rbjgIfEcr3bsEFOPqy18yMaSO25VtSFYfrTCySImPeIicGpxoKFdNVi5OnZCfsWwmtFAlQWttNLybTl00vnMsE8R3";
 
@@ -223,8 +246,9 @@ const Cart = () => {
     setShippingAddress(addresses?.shipping);
   };*/
 
+
   const notify = () =>
-    toast.success("🦄 Payment success!", {
+    toast.success("🦄 Tính năng đang trong giai đoạn thử nghiệm", {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -398,9 +422,12 @@ const Cart = () => {
                   <SummaryItemPrice>${cart.total}</SummaryItemPrice>
                 </SummaryItem>
                 {onCheckOut ? (
-                  <div onClick={handleCheckout}>
-                    <PayButton cartItems={cart.products} />
-                  </div>
+                  <CheckOutWrapper>
+                    <div onClick={handleCheckout}>
+                      <PayButton cartItems={cart.products} />
+                    </div>
+                    <ZaloPay onClick={notify}>Continue with ZaloPay</ZaloPay>
+                  </CheckOutWrapper>
                 ) : (
                   <>
                     <ShippingTitle>Shipping address</ShippingTitle>
@@ -419,6 +446,7 @@ const Cart = () => {
             </>
           )}
         </Bottom>
+        <ToastContainer/>
       </Wrapper>
       <Footer />
     </Container>

@@ -13,7 +13,7 @@ const PayButton = ({cartItems})=>{
     }
     return (
         <>
-        <button className="btn" onClick={()=>handleCheckOut()}>Check Out</button>
+        <button className="btn" onClick={()=>handleCheckOut()}>Continue with Stripe</button>
         </>
     )
 }
