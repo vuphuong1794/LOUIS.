@@ -52,3 +52,10 @@
   li {
     margin-bottom: 5px;
   }
+
+  .huy{
+    padding: 10px;
+    margin: 10px;
+    background-color: white;
+    border-radius: 5px;
+  }

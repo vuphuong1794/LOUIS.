@@ -21,6 +21,11 @@ const Order = () => {
       progress: undefined,
     });
 
+    const handleDelOrder = async(OrderId)=>{
+      try{
+        await axios.delete(`http://localhost:8000/api/orders/${OrderId}`, {withCredentials: true})
+      }catch(err){}
+    }
   useEffect(() => {
     const userId = currentUser._id;
     const fetchOrders = async () => {
@@ -69,6 +74,7 @@ const Order = () => {
                 ))}
               </ul>
             </div>
+            <button className="huy" onClick={()=>handleDelOrder(order._id)}>Hủy đơn hàng </button>
           </div>
         ))
       ) : (
