@@ -88,7 +88,7 @@ const SearchContainer = styled.form`
   padding: 5px;
   border-radius: 8px;
   cursor: pointer;
-  ${mobile({ border: "none", marginLeft: "0px", fontSize: "30px" })}
+  ${mobile({ border: "none", marginLeft: "0px", fontSize: "30px"  })}
 `;
 
 const MobileInput= styled.input`

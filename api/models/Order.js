@@ -3,6 +3,7 @@ const mongoose = require("mongoose")
 const OrderSchema = mongoose.Schema({
     userId: {type: String, required: true},
     products: [{
+        productImg: {type: String},
         productId: {type: String},
         quantity: {type: Number, default: 1}
     }],

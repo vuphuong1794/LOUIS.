@@ -40,7 +40,7 @@ router.delete("/:id", verifyAdmin, async (req, res, next)=>{
 //get user order
 router.get("/find/:userId", verifyUser,async (req, res, next)=>{
     try{
-        const order = await Order.find({userId: req.params.userId});
+        const order = await Order.find({userId: req.params.userId}).sort({ createdAt: -1 });
         res.status(200).json(order)
     }catch(err){
         next(err)

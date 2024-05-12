@@ -26,6 +26,7 @@ const Order = () => {
         await axios.delete(`http://localhost:8000/api/orders/${OrderId}`, {withCredentials: true})
       }catch(err){}
     }
+    
   useEffect(() => {
     const userId = currentUser._id;
     const fetchOrders = async () => {
@@ -67,7 +68,8 @@ const Order = () => {
               <h3 className="product">Sản phẩm:</h3>
               <ul>
                 {order.products.map((product) => (
-                  <li key={product._id}>
+                  <li key={product._id} className="productInfo">
+                    <img src={product?.productImg} className="productImg"/>
                     Mã SP: {product.productId} - SL:{" "}
                     {product.quantity}
                   </li>

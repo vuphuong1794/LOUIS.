@@ -276,6 +276,7 @@ const Cart = () => {
       const orderData = {
         userId: currentUser?._id,
         products: cart.products.map((product) => ({
+          productImg: product.img,
           productId: product._id,
           quantity: product.quantity,
         })),
