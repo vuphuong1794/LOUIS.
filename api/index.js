@@ -22,13 +22,16 @@ mongoose
 // MIDDLEWARES
 
 app.use(cors({
-    origin: ["http://localhost:3000", "http://localhost:8000"],
+    origin: ["http://localhost:3000", "http://localhost:8000", "https://louis-a89w.onrender.com"],
     credentials: true,
 }));
 app.use(cookieParser());
 app.use(express.json())
 
 //ROUTES
+app.get('/', (req, res) => {
+  res.send('hello');
+});
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute)
 app.use("/api/products", productRoute)

@@ -70,7 +70,7 @@ const Register = () => {
     e.preventDefault();
     try{
       const newUser ={ ...info}
-      await axios.post("http://localhost:8000/api/auth/register", newUser);
+      await axios.post("https://louis-a89w.onrender.com/api/auth/register", newUser);
 
       login(dispatch, {username: newUser.username, password: newUser.password})
       setSuccess(true);

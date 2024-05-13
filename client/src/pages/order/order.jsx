@@ -23,7 +23,7 @@ const Order = () => {
 
     const handleDelOrder = async(OrderId)=>{
       try{
-        await axios.delete(`http://localhost:8000/api/orders/${OrderId}`, {withCredentials: true})
+        await axios.delete(`https://louis-a89w.onrender.com/api/orders/${OrderId}`, {withCredentials: true})
       }catch(err){}
     }
     
@@ -32,7 +32,7 @@ const Order = () => {
     const fetchOrders = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8000/api/orders/find/${userId}`,
+          `https://louis-a89w.onrender.com/api/orders/find/${userId}`,
           { withCredentials: true }
         );
         setOrders(response.data);
