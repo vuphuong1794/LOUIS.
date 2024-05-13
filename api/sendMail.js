@@ -13,8 +13,7 @@ const oAuth2Client = new google.auth.OAuth2(
   REDIRECT_URI
 );
 oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
-
-const sendMail = async (username, email, subject, telephone, message) => {
+ const sendMail = async (username, email, subject, telephone, message) => {
   try {
     const accessToken = await oAuth2Client.getAccessToken();
     const transport = nodemailer.createTransport({
@@ -40,6 +39,6 @@ const sendMail = async (username, email, subject, telephone, message) => {
   } catch (err) {
     console.error(err);
   }
-};
+}
 //sendMail()
 module.exports = sendMail;

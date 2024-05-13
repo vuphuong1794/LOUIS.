@@ -57,8 +57,9 @@ const Contact = () => {
     };
     try {
       const response = await axios.post(
-        "https://louis-a89w.onrender.com/api/mail/sendMail",
-        userInfo
+        `https://louis-a89w.onrender.com/api/mail/sendMail`,
+        userInfo,
+        { withCredentials: true }
       );
       console.log(response.data);
       notify(); // Show the notification
@@ -77,7 +78,7 @@ const Contact = () => {
       <div className="wrapper">
         <div className="title">Write us</div>
         <Desc className="desc">
-          *All fields marked with a asterisk are reuired
+          *All fields marked with a asterisk are required
         </Desc>
         <Group>
           <Input
