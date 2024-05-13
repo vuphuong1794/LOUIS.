@@ -21,9 +21,21 @@ mongoose
 
 // MIDDLEWARES
 
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:8000',
+  'https://louis-a89w.onrender.com',
+];
+
 app.use(cors({
-    origin: ["http://localhost:3000", "http://localhost:8000", "https://louis-a89w.onrender.com"],
-    credentials: true,
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.some(allowed => origin.startsWith(allowed))) {
+      callback(null, true);
+    } else {
+      callback(new Error('Origin not allowed by CORS'));
+    }
+  },
+  credentials: true,
 }));
 app.use(cookieParser());
 app.use(express.json())
