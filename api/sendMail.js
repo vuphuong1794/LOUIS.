@@ -41,5 +41,5 @@ const sendMail = async (username, email, subject, telephone, message) => {
     console.error(err);
   }
 };
-
-module.exports = sendMail;
+//sendMail()
+module.exports = sendMail();
