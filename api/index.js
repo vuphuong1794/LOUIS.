@@ -22,7 +22,7 @@ mongoose
 // MIDDLEWARES
 
 app.use(cors({
-    origin: ["http://localhost:3000", "http://localhost:8000"],
+    origin: ["http://localhost:3000", "http://localhost:8000", "https://louis-a89w.onrender.com"],
     credentials: true,
 }));
 app.use(cookieParser());

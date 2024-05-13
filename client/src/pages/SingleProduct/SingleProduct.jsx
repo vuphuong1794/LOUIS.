@@ -136,7 +136,7 @@ const dispatch = useDispatch();
     const getProduct = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8000/api/products/find/${id}`
+          `https://louis-a89w.onrender.com/api/products/find/${id}`
         );
         setProduct(res.data);
       } catch (err) {}

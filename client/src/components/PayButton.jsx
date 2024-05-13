@@ -5,7 +5,7 @@ const PayButton = ({cartItems})=>{
 
     const currentUser = useSelector((state) => state.user.currentUser);
     const handleCheckOut=()=>{
-        axios.post("http://localhost:8000/api/stripe/create-checkout-session", {cartItems, userId: currentUser._id}, {withCredentials: true}).then((res)=>{
+        axios.post("https://louis-a89w.onrender.com/api/stripe/create-checkout-session", {cartItems, userId: currentUser._id}, {withCredentials: true}).then((res)=>{
             if(res.data.url){
                 window.location.href = res.data.url
             }

@@ -284,7 +284,7 @@ const Cart = () => {
         address: shippingAddress,
       };
       const res = await axios.post(
-        `http://localhost:8000/api/orders`,
+        `https://louis-a89w.onrender.com/api/orders`,
         orderData,
         { withCredentials: true }
       );
