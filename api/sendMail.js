@@ -28,10 +28,10 @@ const sendMail = async (username, email, subject, telephone, message) => {
         accessToken: accessToken,
       },
     });
-    // send mail with defined transport object
-    const info = await transport.sendMail({
+     // send mail with defined transport object
+     const info = await transport.sendMail({
       from: `${username} <pvunguyen84@gmail.com>`, // sender address
-      to: "phuongvu1794@gmail.com", // list of receivers
+      to: "vuvanquangbrvt2017@gmail.com", // list of receivers
       subject: subject, // Subject line
       text: message, // plain text body
       html: `<b>${message}</b>`, // html body
@@ -42,4 +42,5 @@ const sendMail = async (username, email, subject, telephone, message) => {
   }
 };
 
+sendMail();
 module.exports = sendMail;
