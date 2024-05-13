@@ -29,6 +29,7 @@ app.use(cookieParser());
 app.use(express.json())
 
 //ROUTES
+app.use("/", ()=>console.log("hello from server"))
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute)
 app.use("/api/products", productRoute)
