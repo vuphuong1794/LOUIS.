@@ -42,4 +42,4 @@ const sendMail = async (username, email, subject, telephone, message) => {
   }
 };
 //sendMail()
-module.exports = sendMail();
+module.exports = sendMail;
