@@ -13,8 +13,7 @@ const oAuth2Client = new google.auth.OAuth2(
   REDIRECT_URI
 );
 oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
-
-const sendMail = async (username, email, subject, telephone, message) => {
+ const sendMail = async (username, email, subject, telephone, message) => {
   try {
     const accessToken = await oAuth2Client.getAccessToken();
     const transport = nodemailer.createTransport({
@@ -28,10 +27,10 @@ const sendMail = async (username, email, subject, telephone, message) => {
         accessToken: accessToken,
       },
     });
-    // send mail with defined transport object
-    const info = await transport.sendMail({
+     // send mail with defined transport object
+     const info = await transport.sendMail({
       from: `${username} <pvunguyen84@gmail.com>`, // sender address
-      to: "phuongvu1794@gmail.com", // list of receivers
+      to: "vuvanquangbrvt2017@gmail.com", // list of receivers
       subject: subject, // Subject line
       text: message, // plain text body
       html: `<b>${message}</b>`, // html body
@@ -40,6 +39,6 @@ const sendMail = async (username, email, subject, telephone, message) => {
   } catch (err) {
     console.error(err);
   }
-};
-
+}
+//sendMail()
 module.exports = sendMail;
