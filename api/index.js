@@ -25,6 +25,7 @@ const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:8000',
   'https://louis-a89w.onrender.com',
+  'https://louis17.netlify.app',
 ];
 
 app.use(cors({
