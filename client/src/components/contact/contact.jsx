@@ -70,6 +70,8 @@ const Contact = () => {
       console.error(error);
     }
   };
+
+  //thêm gg map 
   return (
     <>
       <Link to="/" style={{ color: "black", display: "flex", margin: "20px" }}>
