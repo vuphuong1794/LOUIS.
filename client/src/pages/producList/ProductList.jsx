@@ -94,6 +94,7 @@ const ProductList = () => {
     });
   };
 
+  // thêm mục gợi ý những sản phẩm cùng loại
   return (
     <Container>
       <Navbar />
