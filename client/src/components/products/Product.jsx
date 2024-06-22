@@ -4,10 +4,8 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import { Link } from "react-router-dom";
-import { addProduct } from "../redux/cartRedux";
+import { addToCart } from "../redux/cartRedux";
 import { useDispatch } from "react-redux";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 const Info = styled.div`
   opacity: 0;
@@ -74,20 +72,9 @@ const Product = ({ item }) => {
   const dispatch = useDispatch();
 
   const handleClick=()=>{
-    notify()
-    dispatch(addProduct({...item, quantity: 1, size: item.size[0]}))
+    dispatch(addToCart({...item, quantity: 1, size: item.size[0]}))
   }
 
-  const notify = () =>
-  toast.success("Add to cart successfully!", {
-    position: "top-right",
-    autoClose: 2000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-  });
 
   return (
     <Container>
@@ -96,7 +83,6 @@ const Product = ({ item }) => {
       <Info>
         <Icon>
           <ShoppingCartOutlinedIcon onClick={handleClick}/>
-          <ToastContainer />
         </Icon>
         
         <Icon>
@@ -109,7 +95,6 @@ const Product = ({ item }) => {
           <FavoriteBorderOutlinedIcon />
         </Icon>
       </Info>
-      <ToastContainer />
     </Container>
   );
 };

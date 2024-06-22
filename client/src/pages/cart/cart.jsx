@@ -8,16 +8,13 @@ import { mobile } from "../../responsive";
 import StripeCheckout from "react-stripe-checkout";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import {
-  decreaseQuantity,
-  increaseQuantity,
-  removeAllProducts,
-} from "../../components/redux/cartRedux";
+
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PayButton from "../../components/PayButton";
+import { addToCart, clearCart, decreaseCart, getTotals, removeFromCart } from "../../components/redux/cartRedux";
 
 const Container = styled.div``;
 
@@ -234,9 +231,9 @@ const KEY =
   "pk_test_51P414nRv7rbjgIfEcr3bsEFOPqy18yMaSO25VtSFYfrTCySImPeIicGpxoKFdNVi5OnZCfsWwmtFAlQWttNLybTl00vnMsE8R3";
 
 const Cart = () => {
+  const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.currentUser);
-  const cart = useSelector((state) => state.cart);
   const [onCheckOut, setOnCheckOut] = useState(false);
   const [shippingAddress, setShippingAddress] = useState("");
   /*
@@ -258,17 +255,19 @@ const Cart = () => {
       progress: undefined,
     });
 
-  const handleDecrease = (productId) => {
-    dispatch(decreaseQuantity(productId));
-  };
-  /*
-  const handleIncrease = (productId) => {
-    dispatch(increaseQuantity(productId));
-  };*/
-
-  const handleRemoveAll = (product) => {
-    dispatch(removeAllProducts(product));
-  };
+    useEffect(() => {
+      dispatch(getTotals());
+    }, [cart, dispatch]);
+  
+    const handleAddToCart = (product) => {
+      dispatch(addToCart(product));
+    };
+    const handleDecreaseCart = (product) => {
+      dispatch(decreaseCart(product));
+    };
+    const handleClearCart = () => {
+      dispatch(clearCart());
+    };
 
   const handleCheckout = async (e) => {
     e.preventDefault();
@@ -309,7 +308,7 @@ const Cart = () => {
             <TopText>Shopping Bag(2)</TopText>
             <TopText>Your Wishlist (0)</TopText>
           </TopTexts>
-          <RemoveAll onClick={handleRemoveAll}>Remove all</RemoveAll>
+          <RemoveAll onClick={handleClearCart }>Remove all</RemoveAll>
         </Top>
         <Bottom>
           {currentUser == null || cart.products.length === 0 ? (
@@ -358,7 +357,7 @@ const Cart = () => {
           ) : (
             <>
               <Info>
-                {cart.products.map((product, index) => (
+                {cart.products && cart.products.map((product) => (
                   <Product key={product._id}>
                     <ProductDetail>
                       <Image src={product.img} />
@@ -381,23 +380,15 @@ const Cart = () => {
                     <PriceDetail>
                       <ProductAmountContainer>
                         <AddIcon
-                          onClick={() =>
-                            dispatch(
-                              increaseQuantity(
-                                product._id,
-                                product.quantity,
-                                product.price
-                              )
-                            )
-                          }
+                          onClick={()=>handleAddToCart(product)}
                         />
                         <ProductAmount>{product.quantity}</ProductAmount>
                         <RemoveIcon
-                          onClick={() => handleDecrease(product._id)}
+                          onClick={() => handleDecreaseCart(product)}
                         />
                       </ProductAmountContainer>
                       <ProductPrice>
-                        ${product.price * product.quantity}
+                      ${product.price * product.quantity}
                       </ProductPrice>
                     </PriceDetail>
                   </Product>
@@ -408,7 +399,7 @@ const Cart = () => {
                 <SummaryTitle>ORDER SUMMARY</SummaryTitle>
                 <SummaryItem>
                   <SummaryItemText>Subtotal</SummaryItemText>
-                  <SummaryItemPrice>${cart.total}</SummaryItemPrice>
+                  <SummaryItemPrice>${cart.cartTotalAmount}</SummaryItemPrice>
                 </SummaryItem>
                 <SummaryItem>
                   <SummaryItemText>Estimated Shipping</SummaryItemText>
@@ -420,7 +411,7 @@ const Cart = () => {
                 </SummaryItem>
                 <SummaryItem type="total">
                   <SummaryItemText>Total</SummaryItemText>
-                  <SummaryItemPrice>${cart.total}</SummaryItemPrice>
+                  <SummaryItemPrice>${cart.cartTotalAmount}</SummaryItemPrice>
                 </SummaryItem>
                 {onCheckOut ? (
                   <CheckOutWrapper>

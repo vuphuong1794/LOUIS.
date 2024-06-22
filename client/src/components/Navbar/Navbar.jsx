@@ -114,7 +114,7 @@ const Exist = styled.span`
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  const quantity = useSelector((state) => state.cart.quantity);
+  const quantity = useSelector((state) => state.cart.cartTotalQuantity);
   const actualQuantity = quantity < 0 ? 0 : quantity;
   const { currentUser } = useSelector((state) => state.user);
   const [logout, setLogout] = useState(false);
