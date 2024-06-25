@@ -6,9 +6,22 @@
     margin: 20px;
     display: flex;
     justify-content: flex-start;
-
+    align-items: center;
   }
   
+  .searchOrder{
+    display: flex;
+    align-items: center;
+    margin-left: 30px ;
+    border: 1px solid;
+    border-radius: 5px;
+  }
+
+  .searchOrder input{
+    border: none;
+
+  }
+
   .form-wrapper {
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -64,7 +77,19 @@
     align-items: center;
   }
   
+  .buttonCN{
+    
+  }
+
   .huy {
+    padding: 10px;
+    margin-top: 10px;
+    background-color: white;
+    border-radius: 5px;
+    margin-right: 20px;
+  }
+
+  .xem{
     padding: 10px;
     margin-top: 10px;
     background-color: white;

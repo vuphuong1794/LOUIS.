@@ -5,20 +5,15 @@ import Announcement from "../../components/Announcement/Announcement";
 import Footer from "../../components/Footer/Footer";
 import Navbar from "../../components/Navbar/Navbar";
 import { mobile } from "../../responsive";
-import StripeCheckout from "react-stripe-checkout";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import {
-  decreaseQuantity,
-  increaseQuantity,
-  removeAllProducts,
-} from "../../components/redux/cartRedux";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PayButton from "../../components/PayButton";
-
+import { addToCart, clearCart, decreaseCart, getTotals, removeFromCart } from "../../components/redux/cartRedux";
+import "./cart.css"
 const Container = styled.div``;
 
 const Wrapper = styled.div`
@@ -145,10 +140,10 @@ const Hr = styled.hr`
 
 const Summary = styled.div`
   flex: 1;
-  border: 0.5px solid lightgray;
+  border: 2px solid gray;
   border-radius: 10px;
   padding: 20px;
-  height: 50vh;
+  height: 55vh;
 `;
 
 const SummaryTitle = styled.h1`
@@ -157,9 +152,10 @@ const SummaryTitle = styled.h1`
 
 const SummaryItem = styled.div`
   margin: 20px 0px;
+  
   display: flex;
   justify-content: space-between;
-  font-weight: ${(props) => props.type === "total" && "500"};
+  font-weight: ${(props) => props.type === "total" && "600"};
   font-size: ${(props) => props.type === "total" && "24px"};
 `;
 
@@ -234,9 +230,9 @@ const KEY =
   "pk_test_51P414nRv7rbjgIfEcr3bsEFOPqy18yMaSO25VtSFYfrTCySImPeIicGpxoKFdNVi5OnZCfsWwmtFAlQWttNLybTl00vnMsE8R3";
 
 const Cart = () => {
+  const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.currentUser);
-  const cart = useSelector((state) => state.cart);
   const [onCheckOut, setOnCheckOut] = useState(false);
   const [shippingAddress, setShippingAddress] = useState("");
   /*
@@ -258,17 +254,19 @@ const Cart = () => {
       progress: undefined,
     });
 
-  const handleDecrease = (productId) => {
-    dispatch(decreaseQuantity(productId));
-  };
-  /*
-  const handleIncrease = (productId) => {
-    dispatch(increaseQuantity(productId));
-  };*/
-
-  const handleRemoveAll = (product) => {
-    dispatch(removeAllProducts(product));
-  };
+    useEffect(() => {
+      dispatch(getTotals());
+    }, [cart, dispatch]);
+  
+    const handleAddToCart = (product) => {
+      dispatch(addToCart(product));
+    };
+    const handleDecreaseCart = (product) => {
+      dispatch(decreaseCart(product));
+    };
+    const handleClearCart = () => {
+      dispatch(clearCart());
+    };
 
   const handleCheckout = async (e) => {
     e.preventDefault();
@@ -309,7 +307,7 @@ const Cart = () => {
             <TopText>Shopping Bag(2)</TopText>
             <TopText>Your Wishlist (0)</TopText>
           </TopTexts>
-          <RemoveAll onClick={handleRemoveAll}>Remove all</RemoveAll>
+          <RemoveAll onClick={handleClearCart }>Remove all</RemoveAll>
         </Top>
         <Bottom>
           {currentUser == null || cart.products.length === 0 ? (
@@ -331,6 +329,7 @@ const Cart = () => {
                   "https://blogzine.webestica.com/assets/images/icon/empty-cart.svg"
                 }
                 style={{ width: "250px", height: "250px" }}
+                alt="empty cart"
               />
               <h1
                 style={{
@@ -358,7 +357,7 @@ const Cart = () => {
           ) : (
             <>
               <Info>
-                {cart.products.map((product, index) => (
+                {cart.products && cart.products.map((product) => (
                   <Product key={product._id}>
                     <ProductDetail>
                       <Image src={product.img} />
@@ -381,23 +380,15 @@ const Cart = () => {
                     <PriceDetail>
                       <ProductAmountContainer>
                         <AddIcon
-                          onClick={() =>
-                            dispatch(
-                              increaseQuantity(
-                                product._id,
-                                product.quantity,
-                                product.price
-                              )
-                            )
-                          }
+                          onClick={()=>handleAddToCart(product)}
                         />
                         <ProductAmount>{product.quantity}</ProductAmount>
                         <RemoveIcon
-                          onClick={() => handleDecrease(product._id)}
+                          onClick={() => handleDecreaseCart(product)}
                         />
                       </ProductAmountContainer>
                       <ProductPrice>
-                        ${product.price * product.quantity}
+                      ${product.price * product.quantity}
                       </ProductPrice>
                     </PriceDetail>
                   </Product>
@@ -408,7 +399,7 @@ const Cart = () => {
                 <SummaryTitle>ORDER SUMMARY</SummaryTitle>
                 <SummaryItem>
                   <SummaryItemText>Subtotal</SummaryItemText>
-                  <SummaryItemPrice>${cart.total}</SummaryItemPrice>
+                  <SummaryItemPrice>${cart.cartTotalAmount}</SummaryItemPrice>
                 </SummaryItem>
                 <SummaryItem>
                   <SummaryItemText>Estimated Shipping</SummaryItemText>
@@ -418,9 +409,13 @@ const Cart = () => {
                   <SummaryItemText>Shipping Discount</SummaryItemText>
                   <SummaryItemPrice>$ -5.90</SummaryItemPrice>
                 </SummaryItem>
+                <div className="voucherInput">
+                  <input type="text" placeholder="Enter voucher here"/>
+                  <button>Apply</button>
+                </div>
                 <SummaryItem type="total">
                   <SummaryItemText>Total</SummaryItemText>
-                  <SummaryItemPrice>${cart.total}</SummaryItemPrice>
+                  <SummaryItemPrice>${cart.cartTotalAmount}</SummaryItemPrice>
                 </SummaryItem>
                 {onCheckOut ? (
                   <CheckOutWrapper>

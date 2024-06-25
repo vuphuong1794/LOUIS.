@@ -72,5 +72,41 @@ router.get("/",async (req, res, next)=>{
     }
 })
 
+// Thêm đánh giá mới cho sản phẩm
+router.post("/:id/reviews" ,async (req, res, next) => {
+    try {
+        const product = await Product.findById(req.params.id);
+        if (!product) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+        
+        const newReview = {
+            userName: req.body.userName || "Anonymous",
+            rating: req.body.rating,
+            comment: req.body.comment
+        };
+        
+        product.reviews.push(newReview);
+        await product.save();
+        
+        res.status(200).json(product);
+    } catch (err) {
+        next(err);
+    }
+});
+
+// Lấy tất cả đánh giá của một sản phẩm
+router.get("/:id/reviews", async (req, res, next) => {
+    try {
+        const product = await Product.findById(req.params.id).populate('reviews');
+        if (!product) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+        
+        res.status(200).json(product.reviews);
+    } catch (err) {
+        next(err);
+    }
+});
 
 module.exports = router;

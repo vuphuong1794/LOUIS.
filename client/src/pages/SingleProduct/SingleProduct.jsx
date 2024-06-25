@@ -9,8 +9,9 @@ import Newsletter from "../../components/newLetter/NewLetters";
 import Footer from "../../components/Footer/Footer";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-import { addProduct } from "../../components/redux/cartRedux";
+import { addToCart } from "../../components/redux/cartRedux";
 import { useDispatch } from "react-redux";
+import ReviewsAndComments from "../../components/review/ReviewsAndComments ";
 
 const Container = styled.div``;
 
@@ -126,20 +127,22 @@ const SingleProduct = () => {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
   const [product, setProduct] = useState({});
-  const [color, setColor] = useState("")
-  const [size, setSize] = useState("")
-  const [quantity, setQuantity] = useState(1)
+  const [color, setColor] = useState("");
+  const [size, setSize] = useState("");
+  const [quantity, setQuantity] = useState(1);
 
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const getProduct = async () => {
       try {
         const res = await axios.get(
-          `https://louis-a89w.onrender.com/api/products/find/${id}`
+          `http://localhost:8000/api/products/find/${id}`
         );
         setProduct(res.data);
-      } catch (err) {}
+      } catch (err) {
+        console.error("Error fetching product:", err);
+      }
     };
     getProduct();
   }, [id]);
@@ -152,9 +155,9 @@ const dispatch = useDispatch();
     }
   };
 
-  const handleClick=()=>{
-    dispatch(addProduct({...product, quantity, color, size}))
-  }
+  const handleClick = () => {
+    dispatch(addToCart({ ...product, quantity, color, size }));
+  };
 
   return (
     <Container>
@@ -162,40 +165,43 @@ const dispatch = useDispatch();
       <Announcement />
       <Wrapper>
         <ImgContainer>
-          <Image src={product.img} />
+          <Image src={product.img} alt={product.title} />
         </ImgContainer>
         <InfoContainer>
           <Title>{product.title}</Title>
-          <Desc>
-            {product.desc}
-          </Desc>
+          <Desc>{product.desc}</Desc>
           <Price>$ {product.price}</Price>
           <FilterContainer>
             <Filter>
               <FilterTitle>Color</FilterTitle>
-              {product.color?.map((i)=>(
-                <FilterColor color={i} key={i} onClick={()=>setColor(i)} />
+              {product.color?.map((i) => (
+                <FilterColor
+                  color={i}
+                  key={i}
+                  onClick={() => setColor(i)}
+                />
               ))}
-              
             </Filter>
             <Filter>
               <FilterTitle>Size</FilterTitle>
               <FilterSize onChange={(e) => setSize(e.target.value)}>
-                {product.size?.map((s)=>(
+                {product.size?.map((s) => (
                   <FilterSizeOption key={s}>{s}</FilterSizeOption>
                 ))}
-                
               </FilterSize>
             </Filter>
           </FilterContainer>
           <AddContainer>
             <AmountContainer>
-              <RemoveIcon onClick={()=>handleQuantity("desc")}/>
+              <RemoveIcon onClick={() => handleQuantity("dec")} />
               <Amount>{quantity}</Amount>
-              <AddIcon onClick={()=>handleQuantity("inc")}/>
+              <AddIcon onClick={() => handleQuantity("inc")} />
             </AmountContainer>
-            <Button onClick={handleClick} className="add-btn" >ADD TO CART</Button>
+            <Button onClick={handleClick} className="add-btn">
+              ADD TO CART
+            </Button>
           </AddContainer>
+          <ReviewsAndComments productId={id} />
         </InfoContainer>
       </Wrapper>
       <Newsletter />

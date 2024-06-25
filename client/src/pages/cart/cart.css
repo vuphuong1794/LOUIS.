@@ -1,0 +1,16 @@
+.voucherInput{
+    border: 1px solid;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+}
+
+.voucherInput input{
+    border: none;
+    font-size: 15px;
+}
+
+.voucherInput button{
+    font-weight: 700;
+    
+}

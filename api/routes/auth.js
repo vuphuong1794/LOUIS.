@@ -31,7 +31,7 @@ router.post("/login", async (req, res, next) => {
     });
 
     if(!user) 
-      return next(createdError(404, "User not found!"));
+      return next(createdError(404, "Wrong username!"));
     
     const isPasswordCorrect = await bcrypt.compare(
       req.body.password,
@@ -39,14 +39,14 @@ router.post("/login", async (req, res, next) => {
     );
 
     if (!isPasswordCorrect) 
-      return next(createdError(400, "Wrong password or username!"));
+      return next(createdError(400, "Wrong password!"));
 
     const token = jwt.sign(
       {
         id: user._id,
         isAdmin: user.isAdmin,
       },
-      process.env.JWT,
+      process.env.JWT_ACCESS_KEY,
       { expiresIn: "1d" }
     );
 
@@ -54,11 +54,12 @@ router.post("/login", async (req, res, next) => {
     res
       .cookie("access_token", token, {
         httpOnly: true,
-        sameSite: 'none',
-        secure: true
+        secure: false,
+        path: "/",
+        sameSite: "none",
       })
       .status(200)
-      .json({...others , isAdmin});
+      .json({...others , isAdmin, token});
   } catch (err) {
       next(err);
   }
