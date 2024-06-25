@@ -87,6 +87,7 @@ const Login = () => {
     login(dispatch, {username, password})
   }
 
+  console.log(error)
   return (
     <Container>
       <Wrapper>
@@ -95,7 +96,7 @@ const Login = () => {
           <Input placeholder="username" onChange={(e)=>setUsername(e.target.value)}/>
           <Input placeholder="password" type="password" onChange={(e)=>setPassword(e.target.value)}/>
           <Button onClick={handleLogin} disabled={isFetching}>Login</Button>
-          {error && <Error>Something went wrong...</Error>}
+          {error && <Error>{error?.data?.message}</Error>}
           <Link>Forget pasword?</Link>
           <Link>Sign Up</Link>
 

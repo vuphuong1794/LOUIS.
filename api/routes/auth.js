@@ -31,7 +31,7 @@ router.post("/login", async (req, res, next) => {
     });
 
     if(!user) 
-      return next(createdError(404, "User not found!"));
+      return next(createdError(404, "Wrong username!"));
     
     const isPasswordCorrect = await bcrypt.compare(
       req.body.password,
@@ -39,7 +39,7 @@ router.post("/login", async (req, res, next) => {
     );
 
     if (!isPasswordCorrect) 
-      return next(createdError(400, "Wrong password or username!"));
+      return next(createdError(400, "Wrong password!"));
 
     const token = jwt.sign(
       {
