@@ -46,7 +46,7 @@ router.post("/login", async (req, res, next) => {
         id: user._id,
         isAdmin: user.isAdmin,
       },
-      process.env.JWT,
+      process.env.JWT_ACCESS_KEY,
       { expiresIn: "1d" }
     );
 
@@ -54,11 +54,12 @@ router.post("/login", async (req, res, next) => {
     res
       .cookie("access_token", token, {
         httpOnly: true,
-        sameSite: 'none',
-        secure: true
+        secure: false,
+        path: "/",
+        sameSite: "none",
       })
       .status(200)
-      .json({...others , isAdmin});
+      .json({...others , isAdmin, token});
   } catch (err) {
       next(err);
   }

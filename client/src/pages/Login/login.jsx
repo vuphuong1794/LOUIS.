@@ -87,7 +87,6 @@ const Login = () => {
     login(dispatch, {username, password})
   }
 
-  console.log(error)
   return (
     <Container>
       <Wrapper>

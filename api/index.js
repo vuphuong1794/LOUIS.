@@ -5,6 +5,7 @@ const dotenv = require("dotenv")
 const authRoute = require("./routes/auth")
 const userRoute = require("./routes/user")
 const productRoute = require("./routes/product")
+const reviewRoute = require("./routes/review")
 const cartRoute = require("./routes/cart")
 const orderRoute = require("./routes/order")
 const mailRoute = require("./routes/mailer")
@@ -45,9 +46,10 @@ app.use(express.json())
 app.get('/', (req, res) => {
   res.send('hello');
 });
-app.use("/api/auth", authRoute);
+app.use("/api/auth", authRoute)
 app.use("/api/users", userRoute)
 app.use("/api/products", productRoute)
+app.use("/api/reviews", reviewRoute)
 app.use("/api/carts", cartRoute)
 app.use("/api/orders", orderRoute)
 app.use("/api/mail", mailRoute)

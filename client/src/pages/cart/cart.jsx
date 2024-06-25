@@ -157,8 +157,6 @@ const SummaryItem = styled.div`
   justify-content: space-between;
   font-weight: ${(props) => props.type === "total" && "600"};
   font-size: ${(props) => props.type === "total" && "24px"};
-  border-bottom: ${(props) => props.type === "total" && "1px solid"};;
-
 `;
 
 const SummaryItemText = styled.span``;
