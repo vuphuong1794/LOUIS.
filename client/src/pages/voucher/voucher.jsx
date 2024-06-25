@@ -2,7 +2,12 @@ import React from 'react'
 
 const Voucher = () => {
   return (
-    <><div>Shipping Voucher</div><div>discount vouchers</div></>
+    <>
+    <h1 className='title'>Vouchers</h1>
+    
+    <div>Shipping Voucher</div>
+    <div>discount vouchers</div>
+    </>
   )
 }
 

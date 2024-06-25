@@ -122,6 +122,9 @@ const Button = styled.button`
   }
 `;
 
+const Comment = styled.div`
+`
+
 const SingleProduct = () => {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
@@ -136,7 +139,7 @@ const dispatch = useDispatch();
     const getProduct = async () => {
       try {
         const res = await axios.get(
-          `https://louis-a89w.onrender.com/api/products/find/${id}`
+          `http://localhost:8000/api/products/find/${id}`
         );
         setProduct(res.data);
       } catch (err) {}
@@ -196,6 +199,9 @@ const dispatch = useDispatch();
             </AmountContainer>
             <Button onClick={handleClick} className="add-btn" >ADD TO CART</Button>
           </AddContainer>
+          <Comment>
+            Comment
+          </Comment>
         </InfoContainer>
       </Wrapper>
       <Newsletter />
