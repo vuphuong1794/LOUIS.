@@ -6,9 +6,7 @@ import Categories from '../../components/categories/Categories'
 import Products from '../../components/products/Products'
 import NewLetters from '../../components/newLetter/NewLetters'
 import Footer from '../../components/Footer/Footer'
-import { useSelector } from 'react-redux'
-import { toast, ToastContainer } from 'react-toastify'
-import axios from 'axios'
+import Voucher from "../voucher/voucher"
 
 const Home = () => {
   /*
@@ -41,13 +39,13 @@ const Home = () => {
       fetchOrders();
     }*/
 // thêm scroll to top
-// thêm giới thiệu
   return (
     <div>
       <Announcement />
       <Navbar />
       <Slider />
       <Categories />
+      <Voucher/>
       <Products />
       <NewLetters />
       <Footer />

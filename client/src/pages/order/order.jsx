@@ -3,9 +3,10 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import "./order.css";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
+import SearchIcon from '@mui/icons-material/Search';
 
 const Order = () => {
   const [orders, setOrders] = useState(null);
@@ -53,6 +54,10 @@ const Order = () => {
           <ArrowBackIosIcon />
         </Link>
         <span>Your Order</span>
+        <div className="searchOrder">
+          <input type="text" placeholder="Enter your orderID"/>
+          <SearchIcon onClick={()=>console.log("hello")}/>
+        </div>
       </div>
       {orders ? (
         orders.map((order) => (
@@ -76,7 +81,9 @@ const Order = () => {
                 ))}
               </ul>
             </div>
+            <div className="buttonCN"></div>
             <button className="huy" onClick={()=>handleDelOrder(order._id)}>Hủy đơn hàng </button>
+            <button className="xem">Xem chi tiết </button>
           </div>
         ))
       ) : (
