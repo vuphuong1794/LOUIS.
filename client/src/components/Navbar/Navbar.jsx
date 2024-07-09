@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./navbar.css";
 import SearchIcon from "@mui/icons-material/Search";
 import Badge from "@mui/material/Badge";
@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import { logOut } from "../redux/apiCall";
 import { useState } from "react";
+import Cookies from "js-cookie";
 
 const Container = styled.div`
   height: 60px;
@@ -121,8 +122,11 @@ const Navbar = () => {
   const [input, setInput] = useState("");
   const [clicked, setClicked] = useState(false);
   const navigate = useNavigate();
-  const handleClick = () => {
+
+  const handleLogout = () => {
     logOut(dispatch);
+    setLogout(false);
+    Cookies.remove("access_token");
   };
 
   const handleSearch = (e) => {
@@ -190,7 +194,7 @@ const Navbar = () => {
                   >
                     <span>View order</span>
                   </Link>
-                  <span style={{ padding: "5px" }} onClick={handleClick}>
+                  <span style={{ padding: "5px" }} onClick={handleLogout}>
                     Log out
                   </span>
                 </PopUp>

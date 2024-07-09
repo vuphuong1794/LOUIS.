@@ -204,6 +204,7 @@ const SingleProduct = () => {
           <ReviewsAndComments productId={id} />
         </InfoContainer>
       </Wrapper>
+      <div className="other">Product you may also like</div>
       <Newsletter />
       <Footer />
     </Container>

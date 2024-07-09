@@ -1,56 +1,43 @@
-import React, { useEffect } from 'react'
-import Navbar from '../../components/Navbar/Navbar'
-import Announcement from '../../components/Announcement/Announcement'
-import Slider from '../../components/slider/Slider'
-import Categories from '../../components/categories/Categories'
-import Products from '../../components/products/Products'
-import NewLetters from '../../components/newLetter/NewLetters'
-import Footer from '../../components/Footer/Footer'
-import Voucher from "../voucher/voucher"
-
+import React, { useEffect } from "react";
+import Navbar from "../../components/Navbar/Navbar";
+import Announcement from "../../components/Announcement/Announcement";
+import Slider from "../../components/slider/Slider";
+import Categories from "../../components/categories/Categories";
+import Products from "../../components/products/Products";
+import NewLetters from "../../components/newLetter/NewLetters";
+import Footer from "../../components/Footer/Footer";
+import Voucher from "../voucher/voucher";
+import Cookies from "js-cookie";
 const Home = () => {
+  const accessToken = Cookies.get("access_token");
   /*
-  const { currentUser } = useSelector((state) => state.user);
-  const notify = () => toast.error("Phiên đăng nhập hết hạn!", {
-    position: "top-right",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-  });
+  const notify = () =>
+    toast.error("Please login again!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
 
-    const userId = currentUser?._id;
-    if (userId) {
-      const fetchOrders = async () => {
-        try {
-          const response = await axios.get(
-            `http://localhost:8000/api/orders/find/${userId}`,
-            { withCredentials: true }
-          );
-          if(response.status === 401){
-            notify()
-          }
-        } catch (err) {
-         
-        }
-      };
-      fetchOrders();
+    if (!accessToken) {
+      notify();
     }*/
-// thêm scroll to top
+  // thêm scroll to top
   return (
     <div>
       <Announcement />
       <Navbar />
       <Slider />
       <Categories />
-      <Voucher/>
+      <Voucher />
       <Products />
       <NewLetters />
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
