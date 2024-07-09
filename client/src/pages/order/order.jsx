@@ -30,30 +30,20 @@ const Order = () => {
     
     useEffect(() => {
       const userId = currentUser?._id;
-      console.log("userId", userId);
-      console.log("currentUser", currentUser);
     
       const fetchOrders = async () => {
         try {
-          console.log("Fetching orders...");
-          const response = await axios.get(
+          const res = await axios.get(
             `https://louis-a89w.onrender.com/api/orders/find/${userId}`,
             { withCredentials: true }
           );
-          console.log("API response:", response);
-          setOrders(response.data);
+          setOrders(res.data);
         } catch (err) {
-          console.error("Error fetching orders:", err);
           console.log("Error response:", err.response);
           notify();
         }
       };
-    
-      if (userId) {
-        fetchOrders();
-      } else {
-        console.log("No user ID available");
-      }
+      fetchOrders();
     }, [currentUser]);
 
   return (
