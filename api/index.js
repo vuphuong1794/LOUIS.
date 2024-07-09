@@ -27,16 +27,17 @@ const allowedOrigins = [
   'http://localhost:8000',
   'https://louis-a89w.onrender.com',
   'https://louis17.netlify.app',
+  'http://localhost:3001'
 ];
 
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.some(allowed => origin.startsWith(allowed))) {
-      callback(null, true);
-    } else {
-      callback(new Error('Origin not allowed by CORS'));
-    }
-  },
+  origin: [
+    'http://localhost:3000',
+    'http://localhost:8000',
+    'https://louis-a89w.onrender.com',
+    'https://louis17.netlify.app',
+    'http://localhost:3001'
+  ],
   credentials: true,
 }));
 app.use(cookieParser());
