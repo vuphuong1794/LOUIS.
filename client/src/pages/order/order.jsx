@@ -28,24 +28,33 @@ const Order = () => {
       }catch(err){}
     }
     
-  useEffect(() => {
-    const userId = currentUser._id;
-    const fetchOrders = async () => {
-      try {
-        const response = await axios.get(
-          `https://louis-a89w.onrender.com/api/orders/find/${userId}`,
-          { withCredentials: true }
-        );
-        setOrders(response.data);
-        if (response.status !== 200) {
+    useEffect(() => {
+      const userId = currentUser?._id;
+      console.log("userId", userId);
+      console.log("currentUser", currentUser);
+    
+      const fetchOrders = async () => {
+        try {
+          console.log("Fetching orders...");
+          const response = await axios.get(
+            `https://louis-a89w.onrender.com/api/orders/find/${userId}`,
+            { withCredentials: true }
+          );
+          console.log("API response:", response);
+          setOrders(response.data);
+        } catch (err) {
+          console.error("Error fetching orders:", err);
+          console.log("Error response:", err.response);
           notify();
         }
-      } catch (err) {
-        notify();
+      };
+    
+      if (userId) {
+        fetchOrders();
+      } else {
+        console.log("No user ID available");
       }
-    };
-    fetchOrders();
-  }, []);
+    }, [currentUser]);
 
   return (
     <div>
