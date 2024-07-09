@@ -14,6 +14,8 @@ import "react-toastify/dist/ReactToastify.css";
 import PayButton from "../../components/PayButton";
 import { addToCart, clearCart, decreaseCart, getTotals, removeFromCart } from "../../components/redux/cartRedux";
 import "./cart.css"
+import Cookies from "js-cookie";
+
 const Container = styled.div``;
 
 const Wrapper = styled.div`
@@ -235,6 +237,7 @@ const Cart = () => {
   const currentUser = useSelector((state) => state.user.currentUser);
   const [onCheckOut, setOnCheckOut] = useState(false);
   const [shippingAddress, setShippingAddress] = useState("");
+  //const accessToken = Cookies.get('access_token'); 
   /*
   const [stripeToken, setStripeToken] = useState(null);
   const onToken = (token, addresses) => {

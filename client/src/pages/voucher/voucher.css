@@ -1,0 +1,63 @@
+.container{
+    display: flex;
+    justify-content: space-around;
+    padding: 60px;
+}
+
+.searchVoucher{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.searchVoucher input{
+    border: 1px solid;
+    padding: 10px;
+    width: 200px;
+}
+
+.searchVoucher button{
+    font-weight: bold;
+    margin-left: 7px;
+}
+
+.shippingVoucher{
+    display: flex;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    border: 1px solid gray;
+    border-radius: 7px;
+    padding: 15px;
+    background-color: rgb(42, 192, 243);
+}
+
+.shippingVoucher h4{
+    margin-right: 5px;
+}
+
+.discountVoucher{
+    display: flex;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    border: 2px solid gray;
+    border-radius: 7px;
+    padding: 15px;
+    background-color: orangered;
+}
+
+.discountVoucher h4{
+    margin-right: 5px;
+}
+
+.xtraVoucher{
+    display: flex;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    border: 2px solid gray;
+    border-radius: 7px;
+    padding: 15px;
+    background-color: green;
+}
