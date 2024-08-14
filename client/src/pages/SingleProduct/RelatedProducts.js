@@ -21,7 +21,7 @@ const RelatedProductItem = styled.div`
 `;
 
 const RelatedProductImage = styled.img`
-  height: 25%; /* Điều chỉnh chiều cao của hình ảnh để nó vừa khung */
+  height: 12%; /* Điều chỉnh chiều cao của hình ảnh để nó vừa khung */
   object-fit: cover;
 `;
 
