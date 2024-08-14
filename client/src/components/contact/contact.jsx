@@ -57,7 +57,7 @@ const Contact = () => {
     };
     try {
       const response = await axios.post(
-        `https://louis-a89w.onrender.com/api/mail/sendMail`,
+        `http://localhost:8000/api/mail/sendMail`,
         userInfo,
         { withCredentials: true }
       );
