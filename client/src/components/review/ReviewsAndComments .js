@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-
+import { format } from "date-fns";
 const ReviewContainer = styled.div`
   margin-top: 30px;
 `;
@@ -60,7 +60,7 @@ const ReviewsAndComments = ({ productId }) => {
   const fetchReviews = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:8000/api/products/${productId}/reviews`
+        `https://louis-a89w.onrender.com/api/products/${productId}/reviews`
       );
       setReviews(res.data);
     } catch (err) {
@@ -81,7 +81,7 @@ const ReviewsAndComments = ({ productId }) => {
         userName: user.username || "Anonymous",
       };
       await axios.post(
-        `http://localhost:8000/api/products/${productId}/reviews`,
+        `https://louis-a89w.onrender.com/api/products/${productId}/reviews`,
         newReviewData,
         { withCredentials: true }
       );
@@ -125,6 +125,7 @@ const ReviewsAndComments = ({ productId }) => {
             <p>User: {review.userName || "Anonymous"}</p>
             <p>Rating: {renderStars(review.rating)}</p>
             <p>{review.comment}</p>
+            <p>Date: {format(new Date(review.createdAt), "PPP")}</p> 
           </ReviewItem>
         ))}
       </ReviewList>

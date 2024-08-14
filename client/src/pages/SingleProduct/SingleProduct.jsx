@@ -12,6 +12,8 @@ import axios from "axios";
 import { addToCart } from "../../components/redux/cartRedux";
 import { useDispatch } from "react-redux";
 import ReviewsAndComments from "../../components/review/ReviewsAndComments ";
+import { toast, ToastContainer } from "react-toastify";
+import RelatedProducts from "./RelatedProducts"
 
 const Container = styled.div``;
 
@@ -130,8 +132,35 @@ const SingleProduct = () => {
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
   const [quantity, setQuantity] = useState(1);
+  const [relatedProducts, setRelatedProducts] = useState([]);
 
   const dispatch = useDispatch();
+
+  const getRelatedProducts = async (category) => {
+    try {
+      const res = await axios.get(
+        `https://louis-a89w.onrender.com/api/products?category=${category}&limit=4`
+      );
+      setRelatedProducts(res.data.filter(item => item._id !== id));
+    } catch (err) {
+      console.error("Error fetching related products:", err);
+    }
+  };
+
+  useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const res = await axios.get(
+          `https://louis-a89w.onrender.com/api/products/find/${id}`
+        );
+        setProduct(res.data);
+        getRelatedProducts(res.data.categories[0]);
+      } catch (err) {
+        console.error("Error fetching product:", err);
+      }
+    };
+    getProduct();
+  }, [id]);
 
   useEffect(() => {
     const getProduct = async () => {
@@ -156,6 +185,9 @@ const SingleProduct = () => {
   };
 
   const handleClick = () => {
+    toast.success("Product added to cart", {
+      position: "bottom-left",
+    });
     dispatch(addToCart({ ...product, quantity, color, size }));
   };
 
@@ -203,8 +235,10 @@ const SingleProduct = () => {
           </AddContainer>
           <ReviewsAndComments productId={id} />
         </InfoContainer>
+        <ToastContainer/>
       </Wrapper>
       <div className="other">Product you may also like</div>
+      <RelatedProducts products={relatedProducts} />
       <Newsletter />
       <Footer />
     </Container>

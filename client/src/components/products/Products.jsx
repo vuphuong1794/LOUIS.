@@ -1,31 +1,50 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { popularProducts } from "../../data";
-import Product from "./Product";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Product from "./Product";
 
 const Container = styled.div`
   padding: 20px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+
+  @media (max-width: 768px) {
+    justify-content: space-around;
+  }
 `;
 
-const Products = ({cat, filters, sort}) => {
-  const [products, setProducts] = useState([])
-  const [filterProduct, setFilterProduct] = useState([])
-  
-  useEffect(()=>{
-    const getProduct = async()=>{
+const ProductWrapper = styled.div`
+  flex: 0 0 calc(25% - 15px);
+  margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    flex: 0 0 calc(50% - 10px);
+  }
+`;
+
+const Title = styled.h1`
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
+  margin-bottom: 20px;
+`;
+
+const Products = ({ cat, filters, sort }) => {
+  const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+
+  useEffect(() => {
+    const getProducts = async () => {
       try {
         const res = await axios.get(
           cat
             ? `https://louis-a89w.onrender.com/api/products?category=${cat}`
-            : "https://louis-a89w.onrender.com/api/products"
-          ,{withCredentials:true});
-          //console.log(res.data);
+            : "https://louis-a89w.onrender.com/api/products",
+          { withCredentials: true }
+        );
         setProducts(res.data);
       } catch (err) {
         toast.error("Please login again!", {
@@ -36,33 +55,34 @@ const Products = ({cat, filters, sort}) => {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-        })
+        });
       }
-    }
-    getProduct();
-  },[cat])
+    };
+    getProducts();
+  }, [cat]);
 
-  useEffect(()=>{
-    cat && setFilterProduct(
-      products.filter((item)=>
-        Object.entries(filters).every(([key, value])=>
-          item[key].includes(value)
+  useEffect(() => {
+    cat &&
+      setFilteredProducts(
+        products.filter((item) =>
+          Object.entries(filters).every(([key, value]) =>
+            item[key].includes(value)
+          )
         )
-      )
-    )
-  },[products, cat, filters])
+      );
+  }, [products, cat, filters]);
 
   useEffect(() => {
     if (sort === "newest") {
-      setFilterProduct((prev) =>
+      setFilteredProducts((prev) =>
         [...prev].sort((a, b) => a.createdAt - b.createdAt)
       );
     } else if (sort === "asc") {
-      setFilterProduct((prev) =>
+      setFilteredProducts((prev) =>
         [...prev].sort((a, b) => a.price - b.price)
       );
     } else {
-      setFilterProduct((prev) =>
+      setFilteredProducts((prev) =>
         [...prev].sort((a, b) => b.price - a.price)
       );
     }
@@ -70,15 +90,23 @@ const Products = ({cat, filters, sort}) => {
 
   return (
     <>
-      <h1 style={{display: "flex", justifyContent:"center", fontWeight: "bold"}}> New Products</h1>
+      <Title>New Products</Title>
       <Container>
-      {cat
-        ? filterProduct.map((item) => <Product item={item} key={item.id} />)
-        : products
-            .slice(0, 8)
-            .map((item) => <Product item={item} key={item.id} />)}
-            <ToastContainer/>
+        {cat
+          ? filteredProducts.map((item) => (
+              <ProductWrapper key={item._id}>
+                <Product item={item} />
+              </ProductWrapper>
+            ))
+          : products
+              .slice(0, 8)
+              .map((item) => (
+                <ProductWrapper key={item._id}>
+                  <Product item={item} />
+                </ProductWrapper>
+              ))}
       </Container>
+      <ToastContainer />
     </>
   );
 };
