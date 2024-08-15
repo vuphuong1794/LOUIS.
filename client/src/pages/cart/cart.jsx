@@ -7,7 +7,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import { mobile } from "../../responsive";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,  useNavigate  } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -231,32 +231,25 @@ const CheckOutWrapper = styled.div`
 const KEY =
   "pk_test_51P414nRv7rbjgIfEcr3bsEFOPqy18yMaSO25VtSFYfrTCySImPeIicGpxoKFdNVi5OnZCfsWwmtFAlQWttNLybTl00vnMsE8R3";
 
-const Cart = () => {
-  const cart = useSelector((state) => state.cart);
-  const dispatch = useDispatch();
-  const currentUser = useSelector((state) => state.user.currentUser);
-  const [onCheckOut, setOnCheckOut] = useState(false);
-  const [shippingAddress, setShippingAddress] = useState("");
-  //const accessToken = Cookies.get('access_token'); 
-  /*
-  const [stripeToken, setStripeToken] = useState(null);
-  const onToken = (token, addresses) => {
-    setStripeToken(token);
-    setShippingAddress(addresses?.shipping);
-  };*/
-
-
-  const notify = () =>
-    toast.success("🦄 Tính năng đang trong giai đoạn thử nghiệm", {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-
+  const Cart = () => {
+    const cart = useSelector((state) => state.cart);
+    const dispatch = useDispatch();
+    const currentUser = useSelector((state) => state.user.currentUser);
+    const [onCheckOut, setOnCheckOut] = useState(false);
+    const [shippingAddress, setShippingAddress] = useState("");
+    const navigate = useNavigate();
+  
+    const notify = () =>
+      toast.success("🦄 Tính năng đang trong giai đoạn thử nghiệm", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+  
     useEffect(() => {
       dispatch(getTotals());
     }, [cart, dispatch]);
@@ -270,186 +263,204 @@ const Cart = () => {
     const handleClearCart = () => {
       dispatch(clearCart());
     };
-
-  const handleCheckout = async (e) => {
-    e.preventDefault();
-    try {
-      const orderData = {
-        userId: currentUser?._id,
-        products: cart.products.map((product) => ({
-          productImg: product.img,
-          productId: product._id,
-          quantity: product.quantity,
-        })),
-        amount: cart.total,
-        address: shippingAddress,
-      };
-      const res = await axios.post(
-        `https://louis-a89w.onrender.com/api/orders`,
-        orderData,
-        { withCredentials: true }
-      );
-
-      notify();
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  return (
-    <Container>
-      <Navbar />
-      <Announcement />
-      <Wrapper>
-        <Title>YOUR BAG</Title>
-        <Top>
-          <Link to="/">
-            <TopButton>CONTINUE SHOPPING</TopButton>
-          </Link>
-          <TopTexts>
-            <TopText>Shopping Bag(2)</TopText>
-            <TopText>Your Wishlist (0)</TopText>
-          </TopTexts>
-          <RemoveAll onClick={handleClearCart }>Remove all</RemoveAll>
-        </Top>
-        <Bottom>
-          {currentUser == null || cart.products.length === 0 ? (
-            <div
-              onClick={() =>
-                toast.error("Please login again!", {
-                  position: "top-right",
-                  autoClose: 2000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                })
-              }
-            >
-              <img
-                src={
-                  "https://blogzine.webestica.com/assets/images/icon/empty-cart.svg"
+  
+    const handleOkClick = () => {
+      if (!currentUser) {
+        toast.error("Please login to continue with checkout!", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        navigate("/login");
+      } else {
+        setOnCheckOut(true);
+      }
+    };
+  
+    const handleCheckout = async (e) => {
+      e.preventDefault();
+      try {
+        const orderData = {
+          userId: currentUser._id,
+          products: cart.products.map((product) => ({
+            productImg: product.img,
+            productId: product._id,
+            quantity: product.quantity,
+          })),
+          amount: cart.total,
+          address: shippingAddress,
+        };
+        const res = await axios.post(
+          `https://louis-a89w.onrender.com/api/orders`,
+          orderData,
+          { withCredentials: true }
+        );
+  
+        notify();
+      } catch (err) {
+        console.log(err);
+      }
+    };
+  
+    return (
+      <Container>
+        <Navbar />
+        <Announcement />
+        <Wrapper>
+          <Title>YOUR BAG</Title>
+          <Top>
+            <Link to="/">
+              <TopButton>CONTINUE SHOPPING</TopButton>
+            </Link>
+            <TopTexts>
+              <TopText>Shopping Bag(2)</TopText>
+              <TopText>Your Wishlist (0)</TopText>
+            </TopTexts>
+            <RemoveAll onClick={handleClearCart}>Remove all</RemoveAll>
+          </Top>
+          <Bottom>
+            {cart.products.length === 0 ? (
+              <div
+                onClick={() =>
+                  toast.error("Your cart is empty!", {
+                    position: "top-right",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                  })
                 }
-                style={{ width: "250px", height: "250px" }}
-                alt="empty cart"
-              />
-              <h1
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "45px",
-                }}
               >
-                Oops!
-              </h1>
-              <h3
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  margin: "10px 0 70px 0",
-                  fontSize: "25px",
-                }}
-              >
-                Your Cart Is Empty
-              </h3>
-              <ToastContainer />
-            </div>
-          ) : (
-            <>
-              <Info>
-                {cart.products && cart.products.map((product) => (
-                  <Product key={product._id}>
-                    <ProductDetail>
-                      <Image src={product.img} />
-                      <Details>
-                        <ProductName>
-                          <b>Product:</b> {product.title}
-                        </ProductName>
-                        <ProductId>
-                          <b>ID:</b> {product._id}
-                        </ProductId>
-                        <div style={{ display: "flex" }}>
-                          <span style={{ paddingRight: "10px" }}>Color: </span>
-                          <ProductColor color={product.color} />
-                        </div>
-                        <ProductSize>
-                          <b>Size:</b> {product.size}
-                        </ProductSize>
-                      </Details>
-                    </ProductDetail>
-                    <PriceDetail>
-                      <ProductAmountContainer>
-                        <AddIcon
-                          onClick={()=>handleAddToCart(product)}
+                <img
+                  src={
+                    "https://blogzine.webestica.com/assets/images/icon/empty-cart.svg"
+                  }
+                  style={{ width: "250px", height: "250px" }}
+                  alt="empty cart"
+                />
+                <h1
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: "45px",
+                  }}
+                >
+                  Oops!
+                </h1>
+                <h3
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    margin: "10px 0 70px 0",
+                    fontSize: "25px",
+                  }}
+                >
+                  Your Cart Is Empty
+                </h3>
+                <ToastContainer />
+              </div>
+            ) : (
+              <>
+                <Info>
+                  {cart.products &&
+                    cart.products.map((product) => (
+                      <Product key={product._id}>
+                        <ProductDetail>
+                          <Image src={product.img} />
+                          <Details>
+                            <ProductName>
+                              <b>Product:</b> {product.title}
+                            </ProductName>
+                            <ProductId>
+                              <b>ID:</b> {product._id}
+                            </ProductId>
+                            <div style={{ display: "flex" }}>
+                              <span style={{ paddingRight: "10px" }}>
+                                Color:{" "}
+                              </span>
+                              <ProductColor color={product.color} />
+                            </div>
+                            <ProductSize>
+                              <b>Size:</b> {product.size}
+                            </ProductSize>
+                          </Details>
+                        </ProductDetail>
+                        <PriceDetail>
+                          <ProductAmountContainer>
+                            <AddIcon onClick={() => handleAddToCart(product)} />
+                            <ProductAmount>{product.quantity}</ProductAmount>
+                            <RemoveIcon
+                              onClick={() => handleDecreaseCart(product)}
+                            />
+                          </ProductAmountContainer>
+                          <ProductPrice>
+                            ${product.price * product.quantity}
+                          </ProductPrice>
+                        </PriceDetail>
+                      </Product>
+                    ))}
+                  <Hr />
+                </Info>
+                <Summary>
+                  <SummaryTitle>ORDER SUMMARY</SummaryTitle>
+                  <SummaryItem>
+                    <SummaryItemText>Subtotal</SummaryItemText>
+                    <SummaryItemPrice>${cart.cartTotalAmount}</SummaryItemPrice>
+                  </SummaryItem>
+                  <SummaryItem>
+                    <SummaryItemText>Estimated Shipping</SummaryItemText>
+                    <SummaryItemPrice>$ 5.90</SummaryItemPrice>
+                  </SummaryItem>
+                  <SummaryItem>
+                    <SummaryItemText>Shipping Discount</SummaryItemText>
+                    <SummaryItemPrice>$ -5.90</SummaryItemPrice>
+                  </SummaryItem>
+                  <div className="voucherInput">
+                    <input type="text" placeholder="Enter voucher here" />
+                    <button>Apply</button>
+                  </div>
+                  <SummaryItem type="total">
+                    <SummaryItemText>Total</SummaryItemText>
+                    <SummaryItemPrice>${cart.cartTotalAmount}</SummaryItemPrice>
+                  </SummaryItem>
+                  {onCheckOut ? (
+                    <CheckOutWrapper>
+                      <div onClick={handleCheckout}>
+                        <PayButton cartItems={cart.products} />
+                      </div>
+                      <ZaloPay onClick={notify}>Continue with ZaloPay</ZaloPay>
+                    </CheckOutWrapper>
+                  ) : (
+                    <>
+                      <ShippingTitle>Shipping address</ShippingTitle>
+                      <InputWrapper>
+                        <Input
+                          type="text"
+                          placeholder="Enter your address"
+                          onChange={(e) => setShippingAddress(e.target.value)}
+                          required
                         />
-                        <ProductAmount>{product.quantity}</ProductAmount>
-                        <RemoveIcon
-                          onClick={() => handleDecreaseCart(product)}
-                        />
-                      </ProductAmountContainer>
-                      <ProductPrice>
-                      ${product.price * product.quantity}
-                      </ProductPrice>
-                    </PriceDetail>
-                  </Product>
-                ))}
-                <Hr />
-              </Info>
-              <Summary>
-                <SummaryTitle>ORDER SUMMARY</SummaryTitle>
-                <SummaryItem>
-                  <SummaryItemText>Subtotal</SummaryItemText>
-                  <SummaryItemPrice>${cart.cartTotalAmount}</SummaryItemPrice>
-                </SummaryItem>
-                <SummaryItem>
-                  <SummaryItemText>Estimated Shipping</SummaryItemText>
-                  <SummaryItemPrice>$ 5.90</SummaryItemPrice>
-                </SummaryItem>
-                <SummaryItem>
-                  <SummaryItemText>Shipping Discount</SummaryItemText>
-                  <SummaryItemPrice>$ -5.90</SummaryItemPrice>
-                </SummaryItem>
-                <div className="voucherInput">
-                  <input type="text" placeholder="Enter voucher here"/>
-                  <button>Apply</button>
-                </div>
-                <SummaryItem type="total">
-                  <SummaryItemText>Total</SummaryItemText>
-                  <SummaryItemPrice>${cart.cartTotalAmount}</SummaryItemPrice>
-                </SummaryItem>
-                {onCheckOut ? (
-                  <CheckOutWrapper>
-                    <div onClick={handleCheckout}>
-                      <PayButton cartItems={cart.products} />
-                    </div>
-                    <ZaloPay onClick={notify}>Continue with ZaloPay</ZaloPay>
-                  </CheckOutWrapper>
-                ) : (
-                  <>
-                    <ShippingTitle>Shipping address</ShippingTitle>
-                    <InputWrapper>
-                      <Input
-                        type="text"
-                        placeholder="Enter your address"
-                        onChange={(e) => setShippingAddress(e.target.value)}
-                        required
-                      />
-                      <Button onClick={() => setOnCheckOut(true)}>Ok</Button>
-                    </InputWrapper>
-                  </>
-                )}
-              </Summary>
-            </>
-          )}
-        </Bottom>
-        <ToastContainer/>
-      </Wrapper>
-      <Footer />
-    </Container>
-  );
-};
-
-export default Cart;
+                        <Button onClick={handleOkClick}>Ok</Button>
+                      </InputWrapper>
+                    </>
+                  )}
+                </Summary>
+              </>
+            )}
+          </Bottom>
+          <ToastContainer />
+        </Wrapper>
+        <Footer />
+      </Container>
+    );
+  };
+  
+  export default Cart;

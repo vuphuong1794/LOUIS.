@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from "react";
+import React, { useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import Announcement from "../../components/Announcement/Announcement";
 import Products from "../../components/products/Products";
@@ -8,6 +8,7 @@ import styled from "styled-components";
 import { mobile } from "../../responsive";
 import { useLocation } from "react-router-dom";
 import { categories } from "../../data";
+import Breadcrumb from "./Breadcump";
 
 //STYLE
 const Container = styled.div``;
@@ -21,7 +22,7 @@ const Title = styled.h1`
   align-items: center;
   color: whitesmoke;
   font-size: 60px;
-  ${mobile({fontSize: "40px"})}
+  ${mobile({ fontSize: "40px" })}
 `;
 
 const FilterContainer = styled.div`
@@ -53,39 +54,41 @@ const Option = styled.option`
 `;
 
 const Top = styled.div`
-position: relative;
-`
+  position: relative;
+`;
 
 const Image = styled.img`
   width: 100vw;
   height: 60vh;
   object-fit: cover;
-  ${mobile({height: "25vh"})}
-`
+  ${mobile({ height: "25vh" })}
+`;
 
 const Desc = styled.span`
- position: absolute;
- bottom: 100px;
- font-size: 30px;
- color: white;
- margin: 0 40px;
- ${mobile({bottom: "30px", margin: "0 20px", fontSize: "13px"})}
-`
+  position: absolute;
+  bottom: 100px;
+  font-size: 30px;
+  color: white;
+  margin: 0 40px;
+  ${mobile({ bottom: "30px", margin: "0 20px", fontSize: "13px" })}
+`;
 
 const Sex = styled.div`
-display: flex;
-align-items: center;
-margin: 10px;
-justify-content: center;
-`
+  display: flex;
+  align-items: center;
+  margin: 10px;
+  justify-content: center;
+`;
+
 const ProductList = () => {
   const location = useLocation();
   const cat = location.pathname.split("/")[2];
   const [filters, setFilters] = useState({});
-  const [sort, setSort] = useState("newest")
+  const [sort, setSort] = useState("newest");
 
-  const categoryImage = categories.find(item => item.cat === cat)?.img;  
-  const categoryDesc = categories.find(item => item.cat === cat)?.desc;
+  const categoryImage = categories.find((item) => item.cat === cat)?.img;
+  const categoryDesc = categories.find((item) => item.cat === cat)?.desc;
+
   const handleFilter = (e) => {
     const value = e.target.value;
     setFilters({
@@ -94,19 +97,45 @@ const ProductList = () => {
     });
   };
 
-  // thêm mục gợi ý những sản phẩm cùng loại
   return (
     <Container>
       <Navbar />
       <Announcement />
+      
       <Top>
-      <Title> {cat}</Title>
-      <Desc>{categoryDesc}</Desc>
-      <Image src={categoryImage}/>
+        <Title>{cat}</Title>
+        <Desc>{categoryDesc}</Desc>
+        <Image src={categoryImage} />
       </Top>
       <Sex>
-        <h3 style={{marginRight: "10px", width: "80px", display: "flex", justifyContent: "center",  padding: "10px", borderRadius: "50px", backgroundColor: "black", color: "white"}}>Men</h3>
-        <h3 style={{marginLeft: "10px", display: "flex", justifyContent: "center",width: "80px", padding: "10px", borderRadius: "50px", backgroundColor: "black", color: "white"}}>Women</h3>
+        <h3
+          style={{
+            marginRight: "10px",
+            width: "80px",
+            display: "flex",
+            justifyContent: "center",
+            padding: "10px",
+            borderRadius: "50px",
+            backgroundColor: "black",
+            color: "white",
+          }}
+        >
+          Men
+        </h3>
+        <h3
+          style={{
+            marginLeft: "10px",
+            display: "flex",
+            justifyContent: "center",
+            width: "80px",
+            padding: "10px",
+            borderRadius: "50px",
+            backgroundColor: "black",
+            color: "white",
+          }}
+        >
+          Women
+        </h3>
       </Sex>
       <FilterContainer>
         <Filter>
@@ -131,14 +160,15 @@ const ProductList = () => {
         </Filter>
         <Filter>
           <div className="FilterText">Sort Products:</div>
-          <Select onChange={(e)=>setSort(e.target.value)}>
+          <Select onChange={(e) => setSort(e.target.value)}>
             <Option value="newest">Newest</Option>
             <Option value="asc">Price (asc)</Option>
             <Option value="desc">Price (desc)</Option>
           </Select>
         </Filter>
       </FilterContainer>
-      <Products cat={cat} filters={filters} sort={sort}/>
+      <Breadcrumb /> 
+      <Products cat={cat} filters={filters} sort={sort} />
       <NewLetters />
       <Footer />
     </Container>

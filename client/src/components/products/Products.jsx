@@ -9,7 +9,7 @@ const Container = styled.div`
   padding: 20px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  //justify-content: space-between;
 
   @media (max-width: 768px) {
     justify-content: space-around;
@@ -43,7 +43,7 @@ const Products = ({ cat, filters, sort }) => {
           cat
             ? `https://louis-a89w.onrender.com/api/products?category=${cat}`
             : "https://louis-a89w.onrender.com/api/products",
-          { withCredentials: true }
+          
         );
         setProducts(res.data);
       } catch (err) {
