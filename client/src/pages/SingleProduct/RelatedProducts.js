@@ -10,10 +10,11 @@ const RelatedProductContainer = styled.div`
 const RelatedProductItem = styled.div`
   flex: 0 0 calc(25% - 20px);
   margin: 10px;
-  height: 300px;
+  height: 200px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
   background-color: #f5fbfd;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -21,18 +22,19 @@ const RelatedProductItem = styled.div`
 `;
 
 const RelatedProductImage = styled.img`
-  height: 12%; /* Điều chỉnh chiều cao của hình ảnh để nó vừa khung */
+  height: 150px; 
   object-fit: cover;
 `;
 
 const RelatedProductInfo = styled.div`
   padding: 10px;
   text-align: center;
+  font-size: small;
 `;
 
 const RelatedProductTitle = styled.h3`
   margin-bottom: 5px;
-  font-size: 16px;
+  font-size: small;
 `;
 
 const RelatedProductPrice = styled.span`
