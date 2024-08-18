@@ -38,7 +38,7 @@ export const sliderItems = [
     },
     {
       id: 3,
-      img: "https://media.maxfashion.com/i/max/C23MCSFSMLWFB100GREENLIGHT-C23MCSFSMLWFB100-MXWN23070723_01-2100.jpg?$prodimg-d-prt-pdp-2x$&$quality-retina$&fmt=auto&sm=c",
+      img: "https://product.hstatic.net/200000239547/product/6_pocket_2_7c1a952c93b14f80ae7bdd1a725d62e1_1024x1024.jpg",
       title: "SHORTS, PANTS",
       cat: "short",
       desc: "Discover our newest trouser collection this year"

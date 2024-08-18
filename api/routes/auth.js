@@ -2,8 +2,10 @@ const router = require("express").Router();
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const createdError = require("../utils/error")
-
+const createdError = require("../utils/error");
+const passport = require("passport");
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
+require("dotenv").config();
 //register
 router.post("/register", async (req, res, next) => {
   try {
@@ -19,7 +21,7 @@ router.post("/register", async (req, res, next) => {
     await newUser.save();
     res.status(200).json("User has been created!");
   } catch (err) {
-      next(err);
+    next(err);
   }
 });
 
@@ -30,16 +32,14 @@ router.post("/login", async (req, res, next) => {
       username: req.body.username,
     });
 
-    if(!user) 
-      return next(createdError(404, "Wrong username!"));
-    
+    if (!user) return next(createdError(404, "Wrong username!"));
+
     const isPasswordCorrect = await bcrypt.compare(
       req.body.password,
       user.password
     );
 
-    if (!isPasswordCorrect) 
-      return next(createdError(400, "Wrong password!"));
+    if (!isPasswordCorrect) return next(createdError(400, "Wrong password!"));
 
     const token = jwt.sign(
       {
@@ -50,7 +50,7 @@ router.post("/login", async (req, res, next) => {
       { expiresIn: "1d" }
     );
 
-    const { password, isAdmin,...others } = user._doc;
+    const { password, isAdmin, ...others } = user._doc;
     res
       .cookie("access_token", token, {
         httpOnly: true,
@@ -58,10 +58,30 @@ router.post("/login", async (req, res, next) => {
         sameSite: "none",
       })
       .status(200)
-      .json({...others , isAdmin, token});
+      .json({ ...others, isAdmin, token });
   } catch (err) {
-      next(err);
+    next(err);
   }
 });
 
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: "http://localhost:8000/auth/google/callback",
+    },
+    function (accessToken, refreshToken, profile, done) {
+      done(null, profile);
+    }
+  )
+);
+
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+
+passport.deserializeUser((user, done) => {
+  done(null, user);
+});
 module.exports = router;
