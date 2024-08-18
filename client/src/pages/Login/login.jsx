@@ -4,16 +4,17 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../components/redux/apiCall";
 import { Link, Navigate } from "react-router-dom";
+import GoogleIcon from '@mui/icons-material/Google';
 
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
   background: linear-gradient(
-      rgba(0, 0, 0, 0.5),
-      rgba(0, 0, 0, 0.5)
-    ),
-    url("https://images.pexels.com/photos/6984650/pexels-photo-6984650.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")
-      center;
+    rgba(255, 255, 255, 0.5),
+    rgba(255, 255, 255, 0.5)
+  ),
+  url("https://images.pexels.com/photos/6984650/pexels-photo-6984650.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")
+    center;
   background-size: cover;
   display: flex;
   align-items: center;
@@ -21,20 +22,20 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.div`
-  width: 30%;
+  width: 400px;
   padding: 40px;
-  background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   ${mobile({ width: "85%" })}
 `;
 
 const Title = styled.h1`
-  font-size: 28px;
+  font-size: 32px;
   font-weight: 600;
   text-align: center;
   color: #333;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 `;
 
 const Form = styled.form`
@@ -44,60 +45,91 @@ const Form = styled.form`
 `;
 
 const Input = styled.input`
-  flex: 1;
-  min-width: 100%;
+  width: 100%;
   margin: 10px 0;
   padding: 15px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
   font-size: 16px;
+  transition: border-color 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-color: #4285f4;
+  }
 `;
 
 const Button = styled.button`
   width: 100%;
-  border: none;
+  border-radius: 20px;
   padding: 15px;
-  background-color: teal;
+  background-color: black;
   color: white;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  border-radius: 8px;
-  margin-bottom: 20px;
+  border: none;
+  margin-top: 20px;
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: darkcyan;
+    background-color: #357ae8;
   }
 
   &:disabled {
-    background-color: lightgray;
+    background-color: #cccccc;
     cursor: not-allowed;
+  }
+`;
+
+const GoogleButton = styled(Button)`
+  background-color: #4081EC;
+  color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  &:hover {
+    background-color: gray;
+  }
+`;
+
+const Separator = styled.div`
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 10px 0;
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  span {
+    padding: 0 10px;
+    color: #757575;
+    font-size: 14px;
   }
 `;
 
 const StyledLink = styled(Link)`
   font-size: 14px;
-  color: teal;
+  color: #4285f4;
   text-align: center;
   text-decoration: none;
-  margin-top: 10px;
+  margin-top: 15px;
 
   &:hover {
     text-decoration: underline;
   }
 `;
-const ForgetPassword = styled(StyledLink)`
-  position: absolute;
-  right: 0;
-  bottom: -20px;
-  font-size: 12px;
-  color: teal;
-  ${mobile({ fontSize: "10px" })}
-`;
 
 const Error = styled.span`
-  color: red;
+  color: #d32f2f;
   font-size: 14px;
   text-align: center;
   margin-top: 10px;
@@ -107,7 +139,7 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { isFetching, error, currentUser } = useSelector((state) => state.user);
-
+  
   const dispatch = useDispatch();
 
   const handleLogin = (e) => {
@@ -118,7 +150,7 @@ const Login = () => {
   return (
     <Container>
       <Wrapper>
-        <Title>Sign In</Title>
+        <Title>Welcome Back</Title>
         <Form>
           <Input
             placeholder="Username"
@@ -130,10 +162,16 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <Button onClick={handleLogin} disabled={isFetching}>
-            Login
+            Sign In
           </Button>
           {error && <Error>{error?.data?.message}</Error>}
-          <StyledLink  to="#">Forgot password?</StyledLink>
+          <Separator>
+            <span>OR</span>
+          </Separator>
+          <GoogleButton>
+            <GoogleIcon /><a href="http://localhost:8000/auth/google">Sign in with Google</a> 
+          </GoogleButton>
+          <StyledLink to="#">Forgot password?</StyledLink>
           <StyledLink to="/register">Don't have an account? Sign Up</StyledLink>
           {currentUser != null && <Navigate to="/" />}
         </Form>
