@@ -184,7 +184,7 @@ const Navbar = () => {
                 onClick={() => setLogout(!logout)}
                 style={{ cursor: "pointer" }}
               >
-                {currentUser.username}
+                {currentUser.displayName || currentUser.username}
               </span>
               {logout && (
                 <PopUp>

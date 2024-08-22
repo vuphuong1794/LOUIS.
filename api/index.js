@@ -91,14 +91,20 @@ app.get(
   "/auth/google/callback",
   passport.authenticate("google", {
     failureRedirect: "/auth/google/failure",
-    successRedirect: "/auth/protected",
-  })
+    session: true
+  }),
+  (req, res) => {
+    // Chuyển hướng về localhost:3000 với thông tin người dùng
+    res.redirect(`http://localhost:3000/login-success?user=${encodeURIComponent(JSON.stringify(req.user))}`);
+  }
 );
 
+/*
 app.get('/auth/protected', isLoggedIn,(req, res)=>{
   let name = req.user.displayName
   res.send(`hello ${name}!`)
 })
+*/
 
 app.get('/auth/google/failure', (req, res)=>{
   res.send("something went wrong!")
