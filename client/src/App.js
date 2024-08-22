@@ -10,6 +10,8 @@ import Order from "./pages/order/order";
 import Contact from "./components/contact/contact";
 import CheckoutSuccess from "./components/CheckoutSuccess/CheckoutSuccess";
 import NotFound from "./components/NotFound/NotFound"
+import GoogleLoginCallback from './pages/Login/GoogleLoginCallback'
+
 function App() {
 
   return (
@@ -20,6 +22,7 @@ function App() {
         <Route path="/product/:id" element={<SingleProduct/>}/>
         <Route path="/register" element={<Register/>}/>
         <Route path="/login" element={<Login/>}/>
+        <Route path="/login-success" element={<GoogleLoginCallback/>}/>
         <Route path="/cart" element={<Cart/>}/>
         <Route path="/order" element={<Order/>}/>
         <Route path="/contact" element={<Contact/>}/>

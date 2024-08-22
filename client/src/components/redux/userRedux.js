@@ -19,10 +19,17 @@ const userSlice = createSlice({
             state.currentUser= null;
             state.isFetching=false;
             state.error=action.payload;
+        },
+        googleLoginSuccess: (state, action) => {
+            state.isFetching = false;
+            state.currentUser = {
+                ...action.payload,
+                displayName: action.payload.displayName || action.payload.name
+            };
         }
 
     }
 })
 
-export const {loginSuccess, loginStart, loginFailure} = userSlice.actions;
+export const {loginSuccess, loginStart, loginFailure, googleLoginSuccess} = userSlice.actions;
 export default userSlice.reducer;
