@@ -94,8 +94,8 @@ app.get(
     session: true
   }),
   (req, res) => {
-    // Chuyển hướng về localhost:3000 với thông tin người dùng
-    res.redirect(`http://localhost:3000/login-success?user=${encodeURIComponent(JSON.stringify(req.user))}`);
+    // Chuyển hướng về với thông tin người dùng
+    res.redirect(`https://louis17.netlify.app/login-success?user=${encodeURIComponent(JSON.stringify(req.user))}`);
   }
 );
 
