@@ -13,7 +13,7 @@ import { addToCart } from "../../components/redux/cartRedux";
 import { useDispatch } from "react-redux";
 import ReviewsAndComments from "../../components/review/ReviewsAndComments ";
 import { toast, ToastContainer } from "react-toastify";
-import RelatedProducts from "./RelatedProducts"
+import RelatedProducts from "./RelatedProducts";
 
 const Container = styled.div``;
 
@@ -125,6 +125,15 @@ const Button = styled.button`
   }
 `;
 
+const Other = styled.div`
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  color: white;
+  padding: 10px;
+  background: #6d7e2d;
+`;
+
 const SingleProduct = () => {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
@@ -141,7 +150,7 @@ const SingleProduct = () => {
       const res = await axios.get(
         `https://louis-a89w.onrender.com/api/products?category=${category}&limit=4`
       );
-      setRelatedProducts(res.data.filter(item => item._id !== id));
+      setRelatedProducts(res.data.filter((item) => item._id !== id));
     } catch (err) {
       console.error("Error fetching related products:", err);
     }
@@ -207,11 +216,7 @@ const SingleProduct = () => {
             <Filter>
               <FilterTitle>Color</FilterTitle>
               {product.color?.map((i) => (
-                <FilterColor
-                  color={i}
-                  key={i}
-                  onClick={() => setColor(i)}
-                />
+                <FilterColor color={i} key={i} onClick={() => setColor(i)} />
               ))}
             </Filter>
             <Filter>
@@ -235,9 +240,9 @@ const SingleProduct = () => {
           </AddContainer>
           <ReviewsAndComments productId={id} />
         </InfoContainer>
-        <ToastContainer/>
+        <ToastContainer />
       </Wrapper>
-      <div className="other">Product you may also like</div>
+      <Other>Product you may also like</Other>
       <RelatedProducts products={relatedProducts} />
       <Newsletter />
       <Footer />

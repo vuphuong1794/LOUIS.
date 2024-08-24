@@ -253,7 +253,12 @@ const KEY =
     useEffect(() => {
       dispatch(getTotals());
     }, [cart, dispatch]);
-  
+
+    useEffect(() => {
+      // Log current user when component mounts or user changes
+      console.log("Current user:", currentUser);
+    }, [currentUser]);
+
     const handleAddToCart = (product) => {
       dispatch(addToCart(product));
     };
@@ -264,6 +269,65 @@ const KEY =
       dispatch(clearCart());
     };
   
+    const handleCheckout = async (e) => {
+      e.preventDefault();
+    
+      if (!shippingAddress) {
+        toast.error("Please enter a shipping address!", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        return;
+      }
+    
+      const orderData = {
+        userId: currentUser._id || currentUser.id,
+        products: cart.products.map((product) => ({
+          productImg: product.img,
+          productId: product._id,
+          quantity: product.quantity,
+        })),
+        amount: cart.total || cart.cartTotalAmount, 
+        address: shippingAddress,
+      };
+    
+      // Log orderData to debug
+      console.log("Order data:", orderData);
+    
+      try {
+        const res = await axios.post(
+          `https://louis-a89w.onrender.com/api/orders`,
+          orderData,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            withCredentials: true,
+          }
+        );
+    
+        console.log("Response from server:", res);
+    
+        if (res.status === 201) { // Assuming 201 Created
+          notify("Order created successfully!");
+          dispatch(clearCart());
+        } else {
+          toast.error(`Unexpected response: ${res.statusText}`);
+        }
+      } catch (err) {
+        console.error("Error creating order:", err.response?.data || err.message);
+        toast.error(`Error creating order: ${err.response?.data?.message || err.message}`);
+      }
+        
+    };
+    
+    
+    
     const handleOkClick = () => {
       if (!currentUser) {
         toast.error("Please login to continue with checkout!", {
@@ -280,31 +344,7 @@ const KEY =
         setOnCheckOut(true);
       }
     };
-  
-    const handleCheckout = async (e) => {
-      e.preventDefault();
-      try {
-        const orderData = {
-          userId: currentUser._id,
-          products: cart.products.map((product) => ({
-            productImg: product.img,
-            productId: product._id,
-            quantity: product.quantity,
-          })),
-          amount: cart.total,
-          address: shippingAddress,
-        };
-        const res = await axios.post(
-          `https://louis-a89w.onrender.com/api/orders`,
-          orderData,
-          { withCredentials: true }
-        );
-  
-        notify();
-      } catch (err) {
-        console.log(err);
-      }
-    };
+    
   
     return (
       <Container>
@@ -437,6 +477,7 @@ const KEY =
                         <PayButton cartItems={cart.products} />
                       </div>
                       <ZaloPay onClick={notify}>Continue with ZaloPay</ZaloPay>
+                      
                     </CheckOutWrapper>
                   ) : (
                     <>
