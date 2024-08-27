@@ -14,6 +14,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const stripe = require("./routes/stripe");
 const passport = require("passport")
+const MongoStore = require('connect-mongo');
 require("./routes/auth");
 
 dotenv.config();
@@ -52,10 +53,17 @@ app.use(cookieParser());
 app.use(express.json());
 
 app.use(session({
-  secret: 'your_secret_key',  // Replace with a strong secret key
+  secret: process.env.SESSION_SECRET || 'your_secret_key', // Sử dụng biến môi trường cho bảo mật
   resave: false,
-  saveUninitialized: false,  // Change this to false
-  cookie: { secure: true }   // Set this to false for development, true for production with HTTPS
+  saveUninitialized: false,
+  store: MongoStore.create({ 
+    mongoUrl: process.env.MONGO_DB,
+    collectionName: 'sessions' // Tùy chọn: đặt tên cho collection
+  }),
+  cookie: { 
+    secure: process.env.NODE_ENV === 'production', // Sử dụng secure cookies trong production
+    maxAge: 1000 * 60 * 60 * 24 // Ví dụ: cookie hết hạn sau 1 ngày
+  }
 }));
 
 app.use(passport.initialize())
