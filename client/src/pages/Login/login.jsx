@@ -169,7 +169,7 @@ const Login = () => {
             <span>OR</span>
           </Separator>
           <GoogleButton>
-            <GoogleIcon /><a href="http://localhost:8000/auth/google" style={{textDecoration: "none", color: "white"}}>Sign in with Google</a> 
+            <GoogleIcon /><a href="https://louis-a89w.onrender.com/auth/google" style={{textDecoration: "none", color: "white"}}>Sign in with Google</a> 
           </GoogleButton>
           <StyledLink to="#">Forgot password?</StyledLink>
           <StyledLink to="/register">Don't have an account? Sign Up</StyledLink>

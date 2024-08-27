@@ -221,6 +221,21 @@ const ZaloPay=styled.div`
     cursor: pointer;
 `
 
+const Cod=styled.div`
+    background-color: black;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    width: 250px;
+    margin: 5px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    cursor: pointer;
+`
+
 const CheckOutWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -477,7 +492,7 @@ const KEY =
                         <PayButton cartItems={cart.products} />
                       </div>
                       <ZaloPay onClick={notify}>Continue with ZaloPay</ZaloPay>
-                      
+                      <Cod>Cash On Delivery</Cod>
                     </CheckOutWrapper>
                   ) : (
                     <>
