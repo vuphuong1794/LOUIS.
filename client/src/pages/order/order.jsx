@@ -29,7 +29,7 @@ const Order = () => {
     }
     
     useEffect(() => {
-      const userId = currentUser?._id;
+      const userId = currentUser?._id || currentUser?.id;
     
       const fetchOrders = async () => {
         try {

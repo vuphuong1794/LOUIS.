@@ -6,45 +6,55 @@ const RelatedProductContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
+  margin: 40px 0;
+  padding: 0 20px;
 `;
 
 const ProductGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 30px;
   width: 100%;
-  max-width: 800px;
-  margin-bottom: 30px;
+  max-width: 1200px;
+  margin-bottom: 40px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
+  }
 `;
 
 const RelatedProductItem = styled.div`
-  height: 250px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #f5fbfd;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  background-color: white;
+  border-radius: 10px;
   overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
 `;
 
 const RelatedProductImage = styled.img`
   width: 100%;
-  height: 180px;
+  height: 200px;
   object-fit: cover;
 `;
 
 const RelatedProductInfo = styled.div`
-  padding: 10px;
+  padding: 15px;
   text-align: center;
-  width: 100%;
 `;
 
 const RelatedProductTitle = styled.h3`
-  margin-bottom: 5px;
-  font-size: 16px;
+  margin-bottom: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
 
   @media (max-width: 768px) {
     font-size: 14px;
@@ -53,25 +63,33 @@ const RelatedProductTitle = styled.h3`
 
 const RelatedProductPrice = styled.span`
   font-weight: bold;
-  font-size: 14px;
+  font-size: 18px;
+  color: #4CAF50;
 
   @media (max-width: 768px) {
-    font-size: 12px;
+    font-size: 16px;
   }
 `;
 
 const ViewMoreButton = styled.button`
   margin-top: 20px;
-  padding: 10px 20px;
+  padding: 12px 24px;
   background-color: #4CAF50;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 25px;
   cursor: pointer;
   font-size: 16px;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 
   &:hover {
     background-color: #45a049;
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
   }
 `;
 
@@ -83,15 +101,15 @@ const RelatedProducts = ({ products }) => {
     <RelatedProductContainer>
       <ProductGrid>
         {displayedProducts.map((item) => (
-          <RelatedProductItem key={item._id}>
-            <Link to={`/product/${item._id}`} style={{ textDecoration: 'none', color: 'inherit', width: '100%' }}>
+          <Link to={`/product/${item._id}`} key={item._id} style={{ textDecoration: 'none' }}>
+            <RelatedProductItem>
               <RelatedProductImage src={item.img} alt={item.title} />
               <RelatedProductInfo>
                 <RelatedProductTitle>{item.title}</RelatedProductTitle>
                 <RelatedProductPrice>$ {item.price}</RelatedProductPrice>
               </RelatedProductInfo>
-            </Link>
-          </RelatedProductItem>
+            </RelatedProductItem>
+          </Link>
         ))}
       </ProductGrid>
       {!showAll && products.length > 4 && (
