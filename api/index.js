@@ -102,8 +102,25 @@ app.get(
     session: true
   }),
   (req, res) => {
-    // Chuyển hướng về với thông tin người dùng
-    res.redirect(`https://louis17.netlify.app/login-success?user=${encodeURIComponent(JSON.stringify(req.user))}`);
+    // Tạo JWT token
+    const token = jwt.sign(
+      {
+        id: req.user._id,
+        isAdmin: req.user.isAdmin,
+      },
+      process.env.JWT_ACCESS_KEY,
+      { expiresIn: "1d" }
+    );
+
+    // Đặt token vào cookie
+    res.cookie("access_token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: "none",
+    });
+
+    // Chuyển hướng về frontend với token trong query string
+    res.redirect(`https://louis17.netlify.app/login-success?token=${token}`);
   }
 );
 
