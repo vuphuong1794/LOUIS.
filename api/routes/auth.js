@@ -72,7 +72,7 @@ passport.use(
       callbackURL: "https://louis-a89w.onrender.com/auth/google/callback",
     },
     function (accessToken, refreshToken, profile, done) {
-      done(null, profile);
+      done(null, { profile, accessToken });
     }
   )
 );
