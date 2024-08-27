@@ -71,38 +71,8 @@ passport.use(
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: "https://louis-a89w.onrender.com/auth/google/callback",
     },
-    async (accessToken, refreshToken, profile, done) => {
-      try {
-        // Find or create the user in your database
-        let user = await User.findOne({ googleId: profile.id });
-
-        if (!user) {
-          user = new User({
-            googleId: profile.id,
-            username: profile.displayName,
-            email: profile.emails[0].value,
-            // other profile details you want to save
-          });
-          await user.save();
-        }
-
-        // Generate a JWT token
-        const token = jwt.sign(
-          {
-            id: user._id,
-            isAdmin: user.isAdmin,
-          },
-          process.env.JWT_ACCESS_KEY,
-          { expiresIn: "1d" }
-        );
-
-        // Attach the token to the user object
-        user.token = token;
-
-        done(null, user); // Pass the user and the token
-      } catch (err) {
-        done(err, false);
-      }
+    function (accessToken, refreshToken, profile, done) {
+      done(null, profile);
     }
   )
 );

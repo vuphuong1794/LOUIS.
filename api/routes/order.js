@@ -4,7 +4,7 @@ const { verifyUser, verifyAdmin, verifyToken } = require("../utils/verify");
 const router = require("express").Router();
 
 //create 
-router.post("/", verifyToken, async (req, res, next)=>{
+router.post("/", async (req, res, next)=>{
     const newOrder = new Order(req.body) 
     try{
         const saved = await newOrder.save();
@@ -28,7 +28,7 @@ router.put("/:id", verifyAdmin, async (req, res, next)=>{
 })
 
 //delete
-router.delete("/:id", verifyAdmin, async (req, res, next)=>{
+router.delete("/:id", async (req, res, next)=>{
     try{
         await Order.findByIdAndDelete(req.params.id);
         res.status(200).json("Order has been deleted!")
@@ -38,7 +38,7 @@ router.delete("/:id", verifyAdmin, async (req, res, next)=>{
 })
 
 //get user order
-router.get("/find/:userId", verifyUser,async (req, res, next)=>{
+router.get("/find/:userId",async (req, res, next)=>{
     try{
         const order = await Order.find({userId: req.params.userId}).sort({ createdAt: -1 });
         res.status(200).json(order)

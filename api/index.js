@@ -8,7 +8,6 @@ const userRoute = require("./routes/user");
 const productRoute = require("./routes/product");
 const reviewRoute = require("./routes/review");
 const cartRoute = require("./routes/cart");
-const jwt = require("jsonwebtoken");
 const orderRoute = require("./routes/order");
 const mailRoute = require("./routes/mailer");
 const cors = require("cors");
@@ -103,25 +102,8 @@ app.get(
     session: true
   }),
   (req, res) => {
-    // Tạo JWT token
-    const token = jwt.sign(
-      {
-        id: req.user._id,
-        isAdmin: req.user.isAdmin,
-      },
-      process.env.JWT_ACCESS_KEY,
-      { expiresIn: "1d" }
-    );
-
-    // Đặt token vào cookie
-    res.cookie("access_token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: "none",
-    });
-
-    // Chuyển hướng về frontend với token trong query string
-    res.redirect(`https://louis17.netlify.app/login-success?token=${token}`);
+    // Chuyển hướng về với thông tin người dùng
+    res.redirect(`https://louis17.netlify.app/login-success?user=${encodeURIComponent(JSON.stringify(req.user))}`);
   }
 );
 
