@@ -8,6 +8,7 @@ const userRoute = require("./routes/user");
 const productRoute = require("./routes/product");
 const reviewRoute = require("./routes/review");
 const cartRoute = require("./routes/cart");
+const jwt = require("jsonwebtoken");
 const orderRoute = require("./routes/order");
 const mailRoute = require("./routes/mailer");
 const cors = require("cors");
