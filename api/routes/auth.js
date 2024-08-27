@@ -69,7 +69,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "https://louis-a89w.onrender.com/auth/google/callback",
+      callbackURL: "http://localhost:8000/auth/google/callback",
     },
     function (accessToken, refreshToken, profile, done) {
       done(null, profile);
