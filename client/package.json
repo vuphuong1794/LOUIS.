@@ -12,6 +12,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.8",
+    "client": "file:",
     "date-fns": "^3.6.0",
     "dotenv": "^16.4.5",
     "js-cookie": "^3.0.5",
